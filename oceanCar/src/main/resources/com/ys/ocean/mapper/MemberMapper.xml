@@ -4,8 +4,48 @@
 
 <mapper namespace="com.ys.ocean.mapper.MemberMapper">
 
-	<select id="memberGetList" resultType="memberVO">
+	<select id="memberGetList" resultType="MemberVO">
 		SELECT * FROM MEMBER
+		ORDER BY REG_DATE DESC
 	</select>
+
+	<!-- 회원 정보 발주 -->
+	<select id="memberAllFind" resultType="MemberFindVO">
+		SELECT a.* , b.*
+		FROM
+		MEMBER a, OORDER b
+		WHERE 1 = 1
+		AND a.m_num = b.m_num(+)
+		AND a.m_num =
+		#{m_num}
+	</select>
+
+	<!-- 회원들 숫자 -->
+	<select id="memberCount" resultType="map">
+
+		SELECT COUNT(1) as total
+		,COUNT(DECODE(e_id,NULL,1,NULL)) as nullT
+		,COUNT(1) -
+		COUNT(DECODE(e_id,NULL,1,NULL)) as mm
+		FROM MEMBER
+	</select>
+
+	<!-- 배정된 직원이 없는 회원들 -->
+	<select id="memberNon" resultType="map">
+		SELECT * FROM MEMBER
+		WHERE E_ID
+		IS NULL
+	</select>
+
+	<insert id="insertMember" parameterType="MemberVO">
+		INSERT INTO MEMBER(M_NUM,M_NAME,PHONE,REG_DATE)
+		VALUES
+		(
+		#{m_num}
+		,#{m_name}
+		,#{phone}
+		,SYSDATE
+		)
+	</insert>
 
 </mapper>

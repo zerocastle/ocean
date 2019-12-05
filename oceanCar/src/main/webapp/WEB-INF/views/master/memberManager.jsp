@@ -13,10 +13,10 @@
 <meta name="author" content="">
 
 <title>마스터 회원 관리</title>
+
 </head>
 
 <body id="page-top">
-
 
 
 	<!-- Page Wrapper -->
@@ -43,22 +43,26 @@
 					<div class="row" style="margin-top: 10px;">
 						<div class=".col-auto">
 							<a class="btn btn-info btn-icon-split"> <span class="text"
-								style="color: white;">회원등록</span></a> <a
+								style="color: white;" id="reg">회원등록</span></a> <a
 								style="margin-left: 5px; margin-right: 5px;"
-								class="btn btn-success btn-icon-split"> <span class="text"
-								style="color: white;">분배하기</span></a> <a
+								class="btn btn-success btn-icon-split"> <span id="dis"
+								class="text" style="color: white;">분배하기</span></a> <a
 								class="btn btn-danger btn-icon-split"> <span class="text"
 								style="color: white;">삭제하기</span></a>
+
+							<div style="display: inline-block; margin-left: 100px;">
+								총회원수 : <span id="TOTAL"></span> 배치된수 : <span id="MM"></span>
+								배정되지 않은수: <span id="NULLT"></span>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="table table-striped table-hover" id="dataTable"
-							width="100%" cellspacing="0">
+						<table class="table table-striped table-hover display"
+							id="dataTable" width="100%" cellspacing="0">
 							<thead>
 								<tr>
-									<th>선택</th>
 									<th>회원 아이디</th>
 									<th>회원이름</th>
 									<th>폰번호</th>
@@ -73,7 +77,6 @@
 							<tbody>
 								<c:forEach items="${memberList}" var="member">
 									<tr class="row_table">
-										<td align="center"><input type="checkbox" name="check" class="editor-active"></td>
 										<td><c:out value="${member.m_num}" /></td>
 										<td><c:out value="${member.m_name}" /></td>
 										<td><c:out value="${member.phone}" /></td>
@@ -88,6 +91,7 @@
 									</tr>
 								</c:forEach>
 							</tbody>
+
 						</table>
 					</div>
 				</div>
@@ -103,41 +107,53 @@
 	</div>
 	<script>
 		$(function() {
+			var countObject = ${memberCount};
+			console.table(countObject);
+			//회원 수들 카운터
+			$("#TOTAL").text(countObject.TOTAL);
+			$("#MM").text(countObject.MM);
+			$("#NULLT").text(countObject.NULLT);
 
-			/* $("tbody .row_table").on("click", function(e) {
-			var m_num = $(this).children().eq(1).text();
-			console.log(m_num);
-
-			}) */
-
-			// 상세보기
-			var table = $("#dataTable").DataTable();
-			
-			$('#dataTable tbody').on('click','tr', function() {
-				var data = table.row(this).data();
-				console.log(data);
+			// 상세보기 , table init
+			var table = $("#dataTable").DataTable({
+				"fnRowCallback" : function(row, data, dataIndex) {
+					console.log(row);
+					if (data[8] == '') {
+						$(row).css("color", "#9F81F7");
+					}
+				},
+				"bDestroy" : true
 			});
-			
-			table.destroy();
-			
-			var table = $('#dataTable').DataTable({
-			      'columnDefs': [
-			         {
-			            'targets': 0,
-			            'checkboxes': {
-			               'selectRow': true
-			            }
-			         }
-			      ],
-			      'select': {
-			         'style': 'multi'
-			      },
-			      'order': [[1, 'asc']]
-			   });
-			
-			//체크하기
-			//$("input:checkbox[name='check']").prop("checked",true);
 
+			// 회원 정보 상세보기
+			$('#dataTable tbody').on(
+					'click',
+					'tr',
+					function() {
+
+						console.log($(this));
+
+						var data = table.row(this).data();
+
+						$(this).css("color", "#F78181");
+
+						console.table(data);
+						var mData = data[0];
+
+						window.open("/common/memberChild?mData=" + mData,
+								"memberFind", "width=1000,height=800");
+
+					});
+			
+			//분배하기
+			$("#dis").click(function(){
+				window.open("/move/master/distribution","distribution","width=1000,height=800");
+			})
+			
+			//회원등록
+			$("#reg").click(function(){
+				window.open("/move/master/regMember","regMember","width=200,height=200");
+			})
 		})
 	</script>
 </body>

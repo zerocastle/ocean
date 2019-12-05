@@ -34,6 +34,8 @@
 <!-- Page level custom scripts -->
 <script src="/resources/js/demo/datatables-demo.js"></script>
 
+<script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+
 
 <!-- morris -->
 <link rel="stylesheet"
