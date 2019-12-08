@@ -6,7 +6,8 @@
 
 	<select id="memberGetList" resultType="MemberVO">
 		SELECT * FROM MEMBER
-		ORDER BY REG_DATE DESC
+		ORDER
+		BY REG_DATE DESC
 	</select>
 
 	<!-- 회원 정보 발주 -->
@@ -31,14 +32,15 @@
 	</select>
 
 	<!-- 배정된 직원이 없는 회원들 -->
-	<select id="memberNon" resultType="map">
+	<select id="memberNon" resultType="MemberVO">
 		SELECT * FROM MEMBER
 		WHERE E_ID
 		IS NULL
 	</select>
 
 	<insert id="insertMember" parameterType="MemberVO">
-		INSERT INTO MEMBER(M_NUM,M_NAME,PHONE,REG_DATE)
+		INSERT INTO
+		MEMBER(M_NUM,M_NAME,PHONE,REG_DATE)
 		VALUES
 		(
 		#{m_num}
@@ -48,4 +50,21 @@
 		)
 	</insert>
 
+
+	<!-- 직원 디비 조회 -->
+	<select id="bindEmployee" resultType="EmployeeVO">
+		SELECT * FROM EMPLOYEE
+	</select>
+
+	<!-- 배치된 인원 업데이트 -->
+	<update id="disMemberUpdate" parameterType="hashmap">
+		<foreach collection="params" item="param" separator=";"
+			open="DECLARE BEGIN" close="; END;">
+			UPDATE MEMBER
+			SET
+			E_ID = #{employee}
+			WHERE
+			M_NUM = #{param}
+		</foreach>
+	</update>
 </mapper>

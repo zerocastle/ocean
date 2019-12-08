@@ -31,6 +31,11 @@
 					contentType : "application/json;charset=UTF-8",
 					success : function(data){
 						console.log(data);
+						if(data.signal >= 1){
+							alert("등록완료");
+						}else{
+							alert("오류 발생");
+						}
 					}
 				})
 			});

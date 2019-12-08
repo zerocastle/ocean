@@ -1,5 +1,8 @@
 package com.ys.ocean;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -9,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ys.ocean.service.MemberService;
@@ -64,13 +68,34 @@ public class HomeController {
 		return "/master/chart";
 	}
 
-	// 마스터 분배하기
+	// 무브 마스터 분배하기
 	@RequestMapping(value = "/move/master/distribution", method = RequestMethod.GET)
 	public String moveMasterDistribution(Model model) {
+		/*
+		 * JSONSerializer jsonSerializer = new JSONSerializer();
+		 * model.addAttribute("nonMember",
+		 * jsonSerializer.toJSON(memberService.memberNon()));
+		 * System.out.println(jsonSerializer.toJSON(memberService.memberNon()));
+		 */
 		model.addAttribute("nonMember", memberService.memberNon());
+		model.addAttribute("employee", memberService.bindEmployee());
 		return "/commonChildPage/distribution";
 	}
 
+	// 회원 분배하기 다중 업데이트
+	@ResponseBody
+	@RequestMapping(value = "/member/update/distribute", method = RequestMethod.POST)
+	public String updateDistribute(Model model,  @RequestParam(value="params[]") List<String> param) {
+		System.out.println(param);
+		HashMap map = new HashMap<>();
+		map.put("employee",param.get(param.size() - 1));
+		map.put("params", param);
+		System.out.println("얍 : " + map);
+		int cnt = memberService.disMemberUpdate(map);
+		System.out.println("결과 값 : " + cnt);
+		return "";
+
+	}
 
 	// 로그인 페이지 이동
 	@RequestMapping(value = "/common/login", method = RequestMethod.GET)
@@ -92,16 +117,27 @@ public class HomeController {
 		return "/commonChildPage/memberChildPage";
 	}
 
+	// 회원드록 페이지 이동
+	@RequestMapping(value = "/move/master/regMember", method = RequestMethod.GET)
+	public String moveInsertMember(Model model) {
+
+		logger.info("회원 등록 페이지로 이동");
+
+		return "/commonChildPage/regMember";
+	}
+
 	// 회원등록
 	@ResponseBody
 	@RequestMapping(value = "/master/insertMember", method = RequestMethod.POST)
-	public String moveLoginService(Model model, @RequestBody MemberVO memberVO) {
+	public String insertMember(Model model, @RequestBody MemberVO memberVO) {
 		logger.info("마스터 : 직원들 관리");
 		System.out.println(memberVO);
 		JSONSerializer jsonSerializer = new JSONSerializer();
 		int cnt = memberService.insertMember(memberVO);
-
-		return jsonSerializer.toJSON(cnt).toString();
+		System.out.println();
+		JSONObject object = new JSONObject();
+		object.put("signal", cnt);
+		return object.toString();
 	}
 
 }
