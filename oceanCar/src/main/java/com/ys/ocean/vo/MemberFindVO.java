@@ -15,9 +15,9 @@ public class MemberFindVO {
 	String m_state;
 	String m_order;
 	String memo;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	
 	Date reg_date;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	
 	Date update_date;
 	String e_id;
 
@@ -29,9 +29,9 @@ public class MemberFindVO {
 	String price;
 	String fee_per;
 	String add_price;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	
 	Date order_date;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	
 	Date released;
 	String order_state;
 	String capital;

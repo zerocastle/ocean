@@ -33,5 +33,7 @@ public interface MemberMapper {
 	
 	//배치된 인원 업데이터
 	public int disMemberUpdate(Map param);
-
+	
+	//발주처리
+	public int insertBal(Map param);
 }

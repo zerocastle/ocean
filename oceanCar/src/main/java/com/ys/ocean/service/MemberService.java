@@ -51,10 +51,16 @@ public class MemberService {
 
 		return mapper.insertMember(memberVO);
 	}
-	
-	//배치된 인원 업데이터
+
+	// 배치된 인원 업데이터
 	public int disMemberUpdate(Map param) {
 		return mapper.disMemberUpdate(param);
 	}
+
+	// 발주처리
+	public int insertBal(Map param) {
+
+		return mapper.insertBal(param);
+	};
 
 }

@@ -38,7 +38,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h4 class="collapse-header">직원메뉴</h4>
 				<a class="collapse-item" href="forgot-password.html">내 실적 보기</a> <a
-					class="collapse-item" href="forgot-password.html">내 회원 관리</a>
+					class="collapse-item" href="/move/employee/managerMember">내 회원 관리</a>
 				<div class="collapse-divider"></div>
 				<h4 class="collapse-header">마스터메뉴</h4>
 				<a class="collapse-item" href="404.html">매출액</a> <a

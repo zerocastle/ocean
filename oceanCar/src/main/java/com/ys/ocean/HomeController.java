@@ -139,5 +139,17 @@ public class HomeController {
 		object.put("signal", cnt);
 		return object.toString();
 	}
+	
+	
+	
+	
+	// 맴버부분 ================================================================
+	// 로그인 페이지 이동
+		@RequestMapping(value = "/move/employee/managerMember", method = RequestMethod.GET)
+		public String moveManagerMember(Model model) {
+			logger.info("직원 회원관리");
+
+			return "/employee/managerMember";
+		}
 
 }

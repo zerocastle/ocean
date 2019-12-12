@@ -34,7 +34,7 @@ a:hover {
 	$(function() {
 
 		var data = ${key};
-
+		console.log(data);
 		console.table(data);
 
 		$('input[name=MEM_ID]').val(data[0].m_num);
@@ -43,12 +43,89 @@ a:hover {
 		$('.phone').text(data[0].phone);
 		$('select[name=MEM_STATUS]').val(data[0].m_state);
 		$('select[name=PAY_TYPE]').val(data[0].m_order);
-		$('.regDate').text(new Date(data[0].reg_date.time));
+		$('.regDate').text(getFormatDate(new Date(data[0].reg_date.time)));
 		//var seoul = moment(data[0].update_date.time).tz('Asia/Seoul');
-		$('.updateDate').text(new Date(data[0].update_date.time));
-		
-		$('')
-	})
+		if (data[0].update_date != null) {
+			$('.updateDate').text(
+					getFormatDate(new Date(data[0].update_date.time)));
+		}
+
+		$('input[name=CAR_NAME]').val(data[0].car_type);
+		$('input[name=CAR_MONTH]').val(data[0].month_num);
+		$('input[name=CAR_CREDIT]').val(data[0].credit_worth);
+		$('input[name=CAR_OPTION]').val(data[0].c_option);
+		$('input[name=CAR_PRICE]').val(data[0].price);
+		$('input[name=FEE_PER]').val(data[0].fee_per);
+		$('input[name=CAR_SUPPORT]').val(data[0].add_price);
+		if (data[0].order_date != null) {
+			$('input[name=CAR_BDATE]').val(
+					getFormatDate(new Date(data[0].order_date.time)));
+		}
+		if (data[0].released != null) {
+			$('input[name=CAR_CDATE]').val(
+					getFormatDate(new Date(data[0].order_date.time)));
+		}
+
+		$('select[name=CAR_CAPITAL]').val(data[0].capital);
+
+		$('input[name=CAR_FTMPAY]').val(data[0].first_payment);
+	});
+
+	function getFormatDate(date) {
+		var year = date.getFullYear(); //yyyy
+		var month = (1 + date.getMonth()); //M
+		month = month >= 10 ? month : '0' + month; //month 두자리로 저장
+		var day = date.getDate(); //d
+		day = day >= 10 ? day : '0' + day; //day 두자리로 저장
+		return year + '-' + month + '-' + day;
+	}
+
+	//발주처리
+	function bal() {
+
+		var data = JSON.stringify({
+			"car_type" : $('input[name=CAR_NAME]').val(),
+			"month_num" : $('input[name=CAR_MONTH]').val(),
+			"credit_worth" : $('input[name=CAR_CREDIT]').val(),
+			"c_option" : $('input[name=CAR_OPTION]').val(),
+			"price" : $('input[name=CAR_PRICE]').val(),
+			"fee_per" : $('input[name=FEE_PER]').val(),
+			"capital" : $('select[name=CAR_CAPITAL]').val(),
+			"first_payment" : $('input[name=CAR_FTMPAY]').val()
+		});
+
+		console.log(data);
+
+		$.ajax({
+			type : "post",
+			url : "/member/insertBal",
+			data : data,
+			dataType : "json",
+			contentType : "application/json;charset=UTF-8",
+			success : function(data) {
+				console.log(data);
+				if (data.signal >= 1) {
+					alert("등록완료");
+				} else {
+					alert("오류 발생");
+				}
+			}
+		})
+	}
+
+	//3자리 단위마다 콤마 생성
+	function addCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	 
+	//모든 콤마 제거
+	function removeCommas(x) {
+	    if(!x || x.length == 0) return "";
+	    else return x.split(",").join("");
+	}
+	 
+	
+
 </script>
 
 
@@ -215,18 +292,14 @@ a:hover {
 								type='text' name='CAR_NAME' value=''
 								style='width: 95%; height: 20px;'></td>
 							<td width='10%' bgcolor='#FEECEB'>개월수</td>
-							<td width='20%' align='left' style='padding-left: 7px;'><select
-								name="CAR_MONTH"
-								style="font-family: 돋움; font-size: 9pt; height: 25px">
-									<option value="">개월</option>
-									<option value="36">36개월</option>
-									<option value="48">48개월</option>
-									<option value="60">60개월</option>
-							</select>
+							<td width='20%' align='left' style='padding-left: 7px;'><input
+								type="text" name="CAR_MONTH"
+								style="font-family: 돋움; font-size: 9pt; height: 25px"
+								onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/>
 							<td width='10%' bgcolor='#FEECEB'>신용도</td>
 							<td align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_CREDIT' value=''
-								style='width: 95%; height: 20px;'></td>
+								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/></td>
 
 						</tr>
 
@@ -238,13 +311,12 @@ a:hover {
 							<td width='10%' bgcolor='#ECF2FD'>가격</td>
 							<td width='20%' align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_PRICE' value=''
-								style='width: 95%; height: 20px;'></td>
+								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/"></td>
 							<td width='10%' bgcolor='#ECF2FD'>수수료</td>
 							<td align='left' style='padding-left: 7px;'><input
-								type='text' name='CAR_PRICE' value=''
-								style='width: 25%; height: 20px;'> % &nbsp; <input
-								type='text' name='CarMargin' id='CarMargin'
-								style='border: 0; width: 50%' value="0원"></td>
+								type='text' name='FEE_PER' value=''
+								style='width: 25%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/">
+								% &nbsp;</td>
 						</tr>
 
 
@@ -253,23 +325,23 @@ a:hover {
 							<td width='10%' bgcolor='#ECF2FD'>지원금</td>
 							<td width='30%' align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_SUPPORT' value=''
-								style='width: 95%; height: 20px;'></td>
+								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/"></td>
 							<td width='10%' bgcolor='#ECF2FD'>발주일</td>
 							<td width='20%' align='left' style='padding-left: 7px;'><input
-								type='text' name='CAR_BDATE' id="CAR_BDATE" value='2019-01-01'
-								style='width: 95%; height: 20px;'></td>
+								type='text' name='CAR_BDATE' id="CAR_BDATE" value=''
+								style='width: 95%; height: 20px;' readonly="readonly"></td>
 							<td width='10%' bgcolor='#ECF2FD'>출고일</td>
 							<td align='left' style='padding-left: 7px;'><input
-								type='text' name='CAR_CDATE' id='CAR_CDATE' value='2019-01-01'
-								style='width: 95%; height: 20px;'></td>
+								type='text' name='CAR_CDATE' id='CAR_CDATE' value=''
+								style='width: 95%; height: 20px;' readonly="readonly"></td>
 						</tr>
 						<tr align='center' height='35' bgcolor='#FFFFFF'>
-							<td width='10%' bgcolor='#ECF2FD'>상태</td>
+							<td width='10%' bgcolor='#ECF2FD'></td>
 							<td width='30%' align='left' style='padding-left: 7px;'>
-								<div class="filebox">
+								<!-- <div class="filebox">
 									거절&nbsp; &nbsp; &nbsp; <label for="EMAIL">이미지 등록</label> <input
 										type="file" name="EMAIL" id="EMAIL">
-								</div>
+								</div> -->
 							</td>
 							<td width='10%' bgcolor='#ECF2FD'>캐피탈사</td>
 							<td width='20%' align='left' style='padding-left: 7px;'><select
@@ -299,7 +371,7 @@ a:hover {
 							<td width='10%' bgcolor='#ECF2FD'>선지급금</td>
 							<td align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_FTMPAY' id='CAR_FTMPAY' value=''
-								style='width: 95%; height: 20px;'></td>
+								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/></td>
 						</tr>
 
 					</table>
@@ -317,8 +389,8 @@ a:hover {
 						<tr>
 							<td height='35' align='center' bgcolor='#FFFFFF'
 								style='font-weight: bold; color: #333575;'><a
-								href="JAVASCRIPT:MemModify('balju');"><input type="button"
-									value='발 주' class="btn btn-red"></a> <a
+								href="JAVASCRIPT:bal();"><input type="button" value='발 주'
+									class="btn btn-red"></a> <a
 								href="javascript:MemModify('chulgo');"><input type="button"
 									value='출 고' class="btn btn-red"></a> &nbsp; &nbsp; &nbsp; <a
 								href="JAVASCRIPT:MemModify('member');"><input type="button"

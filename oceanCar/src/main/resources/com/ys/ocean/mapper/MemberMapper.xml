@@ -67,4 +67,13 @@
 			M_NUM = #{param}
 		</foreach>
 	</update>
+
+	<!-- 발주처리 -->
+	<insert id="insertBal" parameterType="hashmap">
+		INSERT INTO
+		OORDER(O_CODE,CAR_TYPE,MONTH_NUM,CREDIT_WORTH,C_OPTION,PRICE,FEE_PER,ADD_PRICE,ORDER_DATE,ORDER_STATE,CAPITAL,FIRST_PAYMENT,M_NUM)
+		VALUES(#{o_code},#{car_type},#{month_num},#{credit_worth},#{c_option},#{price},#{fee_per},#{add_price},SYSDATE,#{order_state},#{capital},#{first_payment},#{m_num})
+	</insert>
+
+
 </mapper>
