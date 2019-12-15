@@ -6,11 +6,14 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ys.ocean.mapper.MemberMapper;
 import com.ys.ocean.vo.EmployeeVO;
+import com.ys.ocean.vo.Key;
 import com.ys.ocean.vo.MemberFindVO;
 import com.ys.ocean.vo.MemberVO;
+import com.ys.ocean.vo.Oorder;
 
 import lombok.AllArgsConstructor;
 
@@ -58,9 +61,36 @@ public class MemberService {
 	}
 
 	// 嫦輿籀葬
-	public int insertBal(Map param) {
+	@Transactional(timeout = 10)
+	public int insertBal(Oorder param) {
+		
+		Map map = new HashMap<String,String>();
 
-		return mapper.insertBal(param);
+		//分分
+		mapper.insertBal(param);
+		
+		map.put("m_num", param.getM_num());
+		
+		
+		mapper.updateState(map);
+		map.clear();
+
+		map.put("e_id",param.getE_id());
+		map.put("price",param.getPrice());
+		//分分
+		System.out.println("鎰堅 : " + map);
+		
+		//hh
+		int n = this.updateOrderPrice(map);
+
+		return n;
 	};
+	
+	public int updateOrderPrice(Map<String,String> map) {
+		
+		int n = mapper.updateOrderPrice(map);
+		System.out.println("n : " + n);
+		return n;
+	}
 
 }

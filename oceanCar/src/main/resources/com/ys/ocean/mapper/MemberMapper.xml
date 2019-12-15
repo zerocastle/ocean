@@ -69,11 +69,71 @@
 	</update>
 
 	<!-- 발주처리 -->
-	<insert id="insertBal" parameterType="hashmap">
+	<insert id="insertBal" parameterType="Oorder">
 		INSERT INTO
-		OORDER(O_CODE,CAR_TYPE,MONTH_NUM,CREDIT_WORTH,C_OPTION,PRICE,FEE_PER,ADD_PRICE,ORDER_DATE,ORDER_STATE,CAPITAL,FIRST_PAYMENT,M_NUM)
-		VALUES(#{o_code},#{car_type},#{month_num},#{credit_worth},#{c_option},#{price},#{fee_per},#{add_price},SYSDATE,#{order_state},#{capital},#{first_payment},#{m_num})
+		OORDER
+		(
+		O_CODE
+		,CAR_TYPE
+		,MONTH_NUM
+		,CREDIT_WORTH
+		,C_OPTION
+		,PRICE
+		,FEE_PER
+		,ADD_PRICE
+		,ORDER_DATE
+		,CAPITAL
+		,FIRST_PAYMENT
+		,M_NUM
+
+		)
+		VALUES(
+		#{o_code}
+		,#{car_type,jdbcType=VARCHAR}
+		,#{month_num,jdbcType=INTEGER}
+		,#{credit_worth,jdbcType=INTEGER}
+		,#{c_option,jdbcType=VARCHAR}
+		,#{price,jdbcType=INTEGER}
+		,#{fee_per,jdbcType=INTEGER}
+		,#{add_price,jdbcType=INTEGER}
+		,SYSDATE
+		,#{capital,jdbcType=VARCHAR}
+		,#{first_payment,jdbcType=INTEGER}
+		,#{m_num,jdbcType=VARCHAR}
+		)
+
+		<selectKey keyProperty="m_num" resultType="String"
+			order="AFTER">
+			SELECT M_NUM FROM MEMBER WHERE M_NUM = #{m_num}
+		</selectKey>
 	</insert>
 
+	<!-- 발주처리에 따른 맴버 상태 업데이트 -->
+	<update id="updateState" parameterType="hashmap">
+		UPDATE MEMBER
+		<![CDATA[
+		SET M_ORDER = '발주'
+		]]>
+		WHERE M_NUM = #{m_num}
+
+		<selectKey keyProperty="e_id,price" resultType="Oorder"
+			order="AFTER">
+			SELECT a.e_id,NVL(b.price,0) price
+			FROM MEMBER a , OORDER b
+			WHERE 1 = 1
+			AND
+			a.m_num = b.m_num
+			and a.m_num = #{m_num}
+		</selectKey>
+	</update>
+
+	<!-- 발주처리후 실적 쌓기 -->
+	<update id="updateOrderPrice" parameterType="hashmap">
+		UPDATE EMPLOYEE
+		<![CDATA[
+		SET PAYMENT = PAYMENT + #{price}
+		]]>
+		WHERE E_ID = #{e_id}
+	</update>
 
 </mapper>

@@ -13,7 +13,7 @@ public class Oorder {
 	private int credit_worth;
 	private String c_option;
 	private int price;
-	private int free_per;
+	private int fee_per;
 	private int add_price;
 	private Date order_date;
 	private Date released;
@@ -21,6 +21,9 @@ public class Oorder {
 	private String capital;
 	private int first_payment;
 
-	private String m_num; //∆˜∏∞≈∞
+	private String m_num; //Ìè¨Î¶∞ÌÇ§
+	
+	//ÌÇ§ÌÇºÌÇ§
+	private String e_id; 
 
 }

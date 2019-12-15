@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import com.ys.ocean.vo.EmployeeVO;
 import com.ys.ocean.vo.MemberFindVO;
 import com.ys.ocean.vo.MemberVO;
+import com.ys.ocean.vo.Oorder;
 
 @Mapper
 public interface MemberMapper {
@@ -35,5 +36,11 @@ public interface MemberMapper {
 	public int disMemberUpdate(Map param);
 	
 	//발주처리
-	public int insertBal(Map param);
+	public int insertBal(Oorder param);
+	
+	//발주처리에 따른 맴버 상태 업데이트
+	public int updateState(Map param);
+	
+	//발주처리후 실적 쌓기
+	public int updateOrderPrice(Map param);
 }

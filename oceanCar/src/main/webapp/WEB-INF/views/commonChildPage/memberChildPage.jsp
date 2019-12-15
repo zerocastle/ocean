@@ -91,7 +91,9 @@ a:hover {
 			"price" : $('input[name=CAR_PRICE]').val(),
 			"fee_per" : $('input[name=FEE_PER]').val(),
 			"capital" : $('select[name=CAR_CAPITAL]').val(),
-			"first_payment" : $('input[name=CAR_FTMPAY]').val()
+			"first_payment" : $('input[name=CAR_FTMPAY]').val(),
+			"m_num" : $('input[name=MEM_ID]').val(),
+			"e_id" : $('input[name=EMP]').val()
 		});
 
 		console.log(data);
@@ -208,7 +210,7 @@ a:hover {
 											style='width: 120px; height: 20px;'></td>
 									</tr>
 									<tr align='center' bgcolor='#FFFFFF' height='35'>
-										<td bgcolor='#E9E7E7'>담장자</td>
+										<td bgcolor='#E9E7E7'>담당자</td>
 										<td align='left' style='padding-left: 7px;'><input
 											type='text' name='EMP' value=''
 											style='width: 120px; height: 20px;'></td>
@@ -311,11 +313,11 @@ a:hover {
 							<td width='10%' bgcolor='#ECF2FD'>가격</td>
 							<td width='20%' align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_PRICE' value=''
-								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/"></td>
+								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/></td>
 							<td width='10%' bgcolor='#ECF2FD'>수수료</td>
 							<td align='left' style='padding-left: 7px;'><input
 								type='text' name='FEE_PER' value=''
-								style='width: 25%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/">
+								style='width: 25%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/>
 								% &nbsp;</td>
 						</tr>
 
@@ -325,7 +327,7 @@ a:hover {
 							<td width='10%' bgcolor='#ECF2FD'>지원금</td>
 							<td width='30%' align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_SUPPORT' value=''
-								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/"></td>
+								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/></td>
 							<td width='10%' bgcolor='#ECF2FD'>발주일</td>
 							<td width='20%' align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_BDATE' id="CAR_BDATE" value=''
