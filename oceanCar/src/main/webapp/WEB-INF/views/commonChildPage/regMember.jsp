@@ -33,10 +33,15 @@
 						console.log(data);
 						if(data.signal >= 1){
 							alert("등록완료");
+							window.opener.location.reload();
+							window.location.reload();
+							
+							
 						}else{
 							alert("오류 발생");
 						}
 					}
+					
 				})
 			});
 		})

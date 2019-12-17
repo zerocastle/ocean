@@ -38,6 +38,7 @@
 		IS NULL
 	</select>
 
+	<!-- 회원등록 -->
 	<insert id="insertMember" parameterType="MemberVO">
 		INSERT INTO
 		MEMBER(M_NUM,M_NAME,PHONE,REG_DATE)
@@ -135,5 +136,25 @@
 		]]>
 		WHERE E_ID = #{e_id}
 	</update>
+
+
+
+	<!-- 회원 메모등록 -->
+	<insert id="insertMemo" parameterType="hashmap">
+		INSERT INTO
+		MEMO(MEMONUM,MEMO,CDATA,WRITER,M_NUM)
+		VALUES(SEQUENCE_MEMBERMEMO.NEXTVAL(),#{memo},SYSDATE,#{writer}#{m_num})
+	</insert>
+
+	<!-- 회원 메모 정보 들고 오기 -->
+	<select id="selectMemoList" resultType="MemberMemo">
+		SELECT
+		ROWNUM,MEMONUM,MEMO,CDATA,WRITER,M_NUM
+		FROM(SELECT * FROM MEMBERMEMO
+		ORDER BY SYSDATE DESC)
+		<![CDATA[
+		WHERE ROWNUM <= 1 AND M_NUM = #{m_num}
+		]]>
+	</select>
 
 </mapper>

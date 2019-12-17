@@ -114,8 +114,11 @@ public class HomeController {
 		JSONSerializer jsonSerializer = new JSONSerializer();
 
 		model.addAttribute("key", JSONArray.fromObject(memberService.memberAllFind(mData)));
+		model.addAttribute("memo",memberService.selectMemoList(mData)); 
 		return "/commonChildPage/memberChildPage";
 	}
+	
+	
 
 	// 회원드록 페이지 이동
 	@RequestMapping(value = "/move/master/regMember", method = RequestMethod.GET)

@@ -12,6 +12,7 @@ import com.ys.ocean.mapper.MemberMapper;
 import com.ys.ocean.vo.EmployeeVO;
 import com.ys.ocean.vo.Key;
 import com.ys.ocean.vo.MemberFindVO;
+import com.ys.ocean.vo.MemberMemo;
 import com.ys.ocean.vo.MemberVO;
 import com.ys.ocean.vo.Oorder;
 
@@ -63,34 +64,45 @@ public class MemberService {
 	// 발주처리
 	@Transactional(timeout = 10)
 	public int insertBal(Oorder param) {
-		
-		Map map = new HashMap<String,String>();
 
-		//ㅐㅐ
+		Map map = new HashMap<String, String>();
+
+		// ㅐㅐ
 		mapper.insertBal(param);
-		
+
 		map.put("m_num", param.getM_num());
-		
-		
+
 		mapper.updateState(map);
 		map.clear();
 
-		map.put("e_id",param.getE_id());
-		map.put("price",param.getPrice());
-		//ㅐㅐ
+		map.put("e_id", param.getE_id());
+		map.put("price", param.getPrice());
+		// ㅐㅐ
 		System.out.println("찍고 : " + map);
-		
-		//hh
+
+		// hh
 		int n = this.updateOrderPrice(map);
 
 		return n;
-	};
-	
-	public int updateOrderPrice(Map<String,String> map) {
-		
+	}
+
+	public int updateOrderPrice(Map<String, String> map) {
+
 		int n = mapper.updateOrderPrice(map);
 		System.out.println("n : " + n);
 		return n;
+	}
+
+	// 회원 메모 등록하기
+	public int insertMemo(Map param) {
+		return mapper.insertMemo(param);
+	}
+
+	// 회원 메모 정보 들고오기
+	public List<MemberMemo> selectMemoList(@Param("m_num") String m_num) {
+		
+		return mapper.selectMemoList(m_num);
+
 	}
 
 }

@@ -46,9 +46,9 @@
 								style="color: white;" id="reg">회원등록</span></a> <a
 								style="margin-left: 5px; margin-right: 5px;"
 								class="btn btn-success btn-icon-split"> <span id="dis"
-								class="text" style="color: white;">분배하기</span></a> <a
+								class="text" style="color: white;">분배하기</span></a> <!-- <a
 								class="btn btn-danger btn-icon-split"> <span class="text"
-								style="color: white;">삭제하기</span></a>
+								style="color: white;">삭제하기</span></a> -->
 
 							<div style="display: inline-block; margin-left: 100px;">
 								총회원수 : <span id="TOTAL"></span> 배치된수 : <span id="MM"></span>
@@ -67,7 +67,7 @@
 									<th>회원이름</th>
 									<th>폰번호</th>
 									<th>가입일</th>
-									<th>수정일</th>
+									<!-- <th>수정일</th> -->
 									<th>진행상태</th>
 									<th>발주유무</th>
 									<th>메모</th>
@@ -82,8 +82,8 @@
 										<td><c:out value="${member.phone}" /></td>
 										<td><fmt:formatDate pattern="yyyy-MM-dd"
 												value="${member.reg_date}" /></td>
-										<td><fmt:formatDate pattern="yyyy-MM-dd"
-												value="${member.update_date}" /></td>
+										<%-- <td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="${member.update_date}" /></td> --%>
 										<td><c:out value="${member.m_state}" /></td>
 										<td><c:out value="${member.m_order}" /></td>
 										<td><c:out value="${member.memo}" /></td>

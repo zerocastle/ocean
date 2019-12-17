@@ -43,7 +43,7 @@
 	<div id="checked_result1"></div>
 
 	<div id="checked_result2"></div>
-	<button type="button" id="chk_ok_btn">체크 확인</button>
+	<button type="button" id="chk_ok_btn">분배하기</button>
 
 	<div>
 		해당 직원선택 : <select id="bindEmployee">
@@ -52,7 +52,7 @@
 			</c:forEach>
 		</select>
 	</div>
-	<button id="dis">분배하기</button>
+	
 	<script type="text/javascript">
 		function chk_ok_show() {
 			$('#checked_result2').empty()
@@ -127,7 +127,10 @@
 			})
 
 			$('#chk_ok_btn').click(function() {
-				chk_ok_show()
+				chk_ok_show();
+				alert("분배 되었습니다");
+				window.location.reload();
+				parent.location.reload();
 			})
 		});
 	</script>

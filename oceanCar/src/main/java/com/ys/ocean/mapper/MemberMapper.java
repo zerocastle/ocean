@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.ys.ocean.vo.EmployeeVO;
 import com.ys.ocean.vo.MemberFindVO;
+import com.ys.ocean.vo.MemberMemo;
 import com.ys.ocean.vo.MemberVO;
 import com.ys.ocean.vo.Oorder;
 
@@ -43,4 +44,10 @@ public interface MemberMapper {
 	
 	//발주처리후 실적 쌓기
 	public int updateOrderPrice(Map param);
+
+	//회원 메모 등록하기
+	public int insertMemo (Map param);
+	
+	//회원 메모 정보 들고오기
+	public List<MemberMemo> selectMemoList(@Param("m_num") String m_num);
 }

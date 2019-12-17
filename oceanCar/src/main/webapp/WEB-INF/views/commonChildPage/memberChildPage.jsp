@@ -36,6 +36,21 @@ a:hover {
 		var data = ${key};
 		console.log(data);
 		console.table(data);
+		
+		if(data[0].e_id == ''){
+			$('#hu').css("display", "none");
+			$('#ha').css("display", "none");
+		}
+
+		if (data[0].m_order == '') {
+			$('#hu').css("display", "none");
+		} else if (data[0].m_order == '출고') {
+			$('#hu').css("display", "none");
+		} else {
+			$('#CAR_CDATE').removeAttr("readonly");
+			$('#CAR_CDATE').attr("type", "date");
+			$('#ha').css("display", "none");
+		}
 
 		$('input[name=MEM_ID]').val(data[0].m_num);
 		$('input[name=NAME]').val(data[0].m_name);
@@ -107,6 +122,34 @@ a:hover {
 			success : function(data) {
 				console.log(data);
 				if (data.signal >= 1) {
+					window.opener.location.reload();
+					window.location.reload();
+					alert("등록완료");
+				} else {
+					alert("오류 발생");
+				}
+			}
+		})
+	}
+
+	//메모 등록하기
+	function memo() {
+		var data = {
+			"memo" : $("#NEW_MEMO").val(),
+			"m_num" : $('input[name=MEM_ID]').val()
+		};
+
+		$.ajax({
+			type : "post",
+			url : "/member/insertMemo",
+			data : data,
+			dataType : "json",
+			contentType : "application/json;charset=UTF-8",
+			success : function(data) {
+				console.log(data);
+				if (data.signal >= 1) {
+					window.opener.location.reload();
+					window.location.reload();
 					alert("등록완료");
 				} else {
 					alert("오류 발생");
@@ -117,17 +160,16 @@ a:hover {
 
 	//3자리 단위마다 콤마 생성
 	function addCommas(x) {
-	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
-	 
+
 	//모든 콤마 제거
 	function removeCommas(x) {
-	    if(!x || x.length == 0) return "";
-	    else return x.split(",").join("");
+		if (!x || x.length == 0)
+			return "";
+		else
+			return x.split(",").join("");
 	}
-	 
-	
-
 </script>
 
 
@@ -244,7 +286,7 @@ a:hover {
 									<tr align='center' bgcolor='#FFFFFF' height='35'>
 										<td bgcolor='#E9E7E7'>가입일</td>
 										<td align='left' class="regDate" style='padding-left: 7px;'>
-										<td bgcolor='#E9E7E7'>수정일</td>
+										<td bgcolor='#E9E7E7'></td>
 										<td align='left' class="updateDate" style='padding-left: 7px;'></td>
 									</tr>
 
@@ -265,7 +307,7 @@ a:hover {
 									<tr>
 										<td height='35' colspan='6' align='center' bgcolor='#FFFFFF'
 											style='font-weight: bold; color: #333575;'><a
-											href="JAVASCRIPT:MemModify('memo');"><input type="button"
+											href="JAVASCRIPT:memo();"><input type="button"
 												value='상담메모 등록' class="btn btn-primary"></a></td>
 									</tr>
 								</table>
@@ -297,11 +339,12 @@ a:hover {
 							<td width='20%' align='left' style='padding-left: 7px;'><input
 								type="text" name="CAR_MONTH"
 								style="font-family: 돋움; font-size: 9pt; height: 25px"
-								onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/>
+								onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" />
 							<td width='10%' bgcolor='#FEECEB'>신용도</td>
 							<td align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_CREDIT' value=''
-								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/></td>
+								style='width: 95%; height: 20px;'
+								onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" /></td>
 
 						</tr>
 
@@ -313,11 +356,13 @@ a:hover {
 							<td width='10%' bgcolor='#ECF2FD'>가격</td>
 							<td width='20%' align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_PRICE' value=''
-								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/></td>
+								style='width: 95%; height: 20px;'
+								onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" /></td>
 							<td width='10%' bgcolor='#ECF2FD'>수수료</td>
 							<td align='left' style='padding-left: 7px;'><input
 								type='text' name='FEE_PER' value=''
-								style='width: 25%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/>
+								style='width: 25%; height: 20px;'
+								onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" />
 								% &nbsp;</td>
 						</tr>
 
@@ -327,7 +372,8 @@ a:hover {
 							<td width='10%' bgcolor='#ECF2FD'>지원금</td>
 							<td width='30%' align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_SUPPORT' value=''
-								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/></td>
+								style='width: 95%; height: 20px;'
+								onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" /></td>
 							<td width='10%' bgcolor='#ECF2FD'>발주일</td>
 							<td width='20%' align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_BDATE' id="CAR_BDATE" value=''
@@ -373,7 +419,8 @@ a:hover {
 							<td width='10%' bgcolor='#ECF2FD'>선지급금</td>
 							<td align='left' style='padding-left: 7px;'><input
 								type='text' name='CAR_FTMPAY' id='CAR_FTMPAY' value=''
-								style='width: 95%; height: 20px;' onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;"/></td>
+								style='width: 95%; height: 20px;'
+								onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" /></td>
 						</tr>
 
 					</table>
@@ -390,15 +437,17 @@ a:hover {
 					<table width='100%'>
 						<tr>
 							<td height='35' align='center' bgcolor='#FFFFFF'
-								style='font-weight: bold; color: #333575;'><a
-								href="JAVASCRIPT:bal();"><input type="button" value='발 주'
-									class="btn btn-red"></a> <a
-								href="javascript:MemModify('chulgo');"><input type="button"
-									value='출 고' class="btn btn-red"></a> &nbsp; &nbsp; &nbsp; <a
+								style='font-weight: bold; color: #333575;'>
+								<!-- 발주에대한 변화 --> <a href="JAVASCRIPT:bal();" id="ha"><input
+									type="button" value='발 주' class="btn btn-red"></a> <a
+								href="javascript:MemModify('chulgo');" id="hu"><input
+									type="button" value='출 고' class="btn btn-red"></a> &nbsp;
+								&nbsp; &nbsp; <!-- <a
 								href="JAVASCRIPT:MemModify('member');"><input type="button"
-									value='수 정' class="btn btn-primary"></a> <a
+									value='수 정' class="btn btn-primary"></a> --> <a
 								href="javascript:self.close();"><input type="button"
-									value='닫 기' class="btn btn-primary"></a></td>
+									value='닫 기' class="btn btn-primary"></a>
+							</td>
 						</tr>
 					</table>
 				</td>
@@ -421,11 +470,19 @@ a:hover {
 							<td width='80'>작성자</td>
 							<td>영업 상담</td>
 						</tr>
-						<tr align='center' height='25' bgcolor='#FFFFFF'>
-							<td></td>
-							<td></td>
-							<td align='left' style='padding-left: 7px;'></td>
-						</tr>
+
+						<c:forEach items="${memo}" var="item">
+							<tr align='center' height='25' bgcolor='#FFFFFF'>
+
+								<td><fmt:formatDate pattern="yyyy-MM-dd"
+										value="${item.cdata}" /></td>
+								<td><c:out value="${item.writer}" /></td>
+
+								<td align='left' style='padding-left: 7px;'><c:out
+										value="${item.memo}" /></td>
+							</tr>
+						</c:forEach>
+
 
 					</table>
 
