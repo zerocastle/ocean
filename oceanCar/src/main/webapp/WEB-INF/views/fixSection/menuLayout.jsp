@@ -37,11 +37,11 @@
 			aria-labelledby="headingPages" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h4 class="collapse-header">직원메뉴</h4>
-				<a class="collapse-item" href="forgot-password.html">내 실적 보기</a> <a
-					class="collapse-item" href="/move/employee/managerMember">내 회원 관리</a>
+				<!-- <a class="collapse-item" href="forgot-password.html">내 실적 보기</a> --> <a
+					class="collapse-item" href="/move/employee/managerMember?e_id=${sessionScope.employee.e_id }">내 회원 관리</a>
 				<div class="collapse-divider"></div>
 				<h4 class="collapse-header">마스터메뉴</h4>
-				<a class="collapse-item" href="404.html">매출액</a> <a
+				<!-- <a class="collapse-item" href="404.html">매출액</a> --> <a
 					class="collapse-item" href="/move/master/memberManager">회원리스트
 					관리</a> <a class="collapse-item" href="/move/master/employeeManager">직원관리</a>
 					<a class="collapse-item" href="/move/master/employeeManager">발주처리관리 </a>
@@ -52,13 +52,13 @@
 	<!-- Nav Item - Charts -->
 	<li class="nav-item"><a class="nav-link"
 		href="/move/master/monthChart"> <i class="fas fa-fw fa-chart-area"></i>
-			<span style="font-size : large">차트</span>
+			<span style="font-size : large">매출액</span>
 	</a></li>
 
 	<!-- Nav Item - Tables -->
-	<li class="nav-item"><a class="nav-link" href="tables.html"> <i
+	<!-- <li class="nav-item"><a class="nav-link" href="tables.html"> <i
 			class="fas fa-fw fa-table"></i> <span style="font-size : large">게시판</span>
-	</a></li>
+	</a></li> -->
 
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">

@@ -10,4 +10,13 @@
 		WHERE e_id = #{e_id} AND PW = #{pw}
 	</select>
 
+	<!-- 내 회원들 정보 들고오기-->
+	<select id="employeeManagerList" resultType="MemberVO">
+		SELECT a.*
+		FROM MEMBER a , EMPLOYEE b
+		WHERE b.e_id = a.e_id
+		AND b.e_id = #{e_id}
+	</select>
+
+
 </mapper>

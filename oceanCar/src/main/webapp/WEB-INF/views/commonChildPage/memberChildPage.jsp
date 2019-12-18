@@ -134,11 +134,13 @@ a:hover {
 
 	//메모 등록하기
 	function memo() {
-		var data = {
+		
+		var data = JSON.stringify({
 			"memo" : $("#NEW_MEMO").val(),
-			"m_num" : $('input[name=MEM_ID]').val()
-		};
-
+			"m_num" : $('input[name=MEM_ID]').val(),
+			"writer" : "${sessionScope.employee.e_id}"
+		});
+		console.log(data);
 		$.ajax({
 			type : "post",
 			url : "/member/insertMemo",

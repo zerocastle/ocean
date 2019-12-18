@@ -14,6 +14,90 @@
 
 <title>마스터 회원 관리</title>
 
+<!-- Styles -->
+<style>
+#chartdiv {
+	width: 100%;
+	height: 500px;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+	am4core
+			.ready(function() {
+
+				// Themes begin
+				am4core.useTheme(am4themes_animated);
+				// Themes end
+
+				// Create chart instance
+				var chart = am4core.create("chartdiv", am4charts.XYChart);
+
+				// Add data
+				chart.data = [
+						{
+							"name" : "John",
+							"points" : 35654,
+							"color" : chart.colors.next(),
+							"bullet" : "https://www.amcharts.com/lib/images/faces/A04.png"
+						}
+				];
+
+				// Create axes
+				var categoryAxis = chart.xAxes
+						.push(new am4charts.CategoryAxis());
+				categoryAxis.dataFields.category = "name";
+				categoryAxis.renderer.grid.template.disabled = true;
+				categoryAxis.renderer.minGridDistance = 30;
+				categoryAxis.renderer.inside = true;
+				categoryAxis.renderer.labels.template.fill = am4core
+						.color("#fff");
+				categoryAxis.renderer.labels.template.fontSize = 20;
+
+				var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+				valueAxis.renderer.grid.template.strokeDasharray = "4,4";
+				valueAxis.renderer.labels.template.disabled = true;
+				valueAxis.min = 0;
+
+				// Do not crop bullets
+				chart.maskBullets = false;
+
+				// Remove padding
+				chart.paddingBottom = 0;
+
+				// Create series
+				var series = chart.series.push(new am4charts.ColumnSeries());
+				series.dataFields.valueY = "points";
+				series.dataFields.categoryX = "name";
+				series.columns.template.propertyFields.fill = "color";
+				series.columns.template.propertyFields.stroke = "color";
+				series.columns.template.column.cornerRadiusTopLeft = 15;
+				series.columns.template.column.cornerRadiusTopRight = 15;
+				series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/b]";
+
+				// Add bullets
+				var bullet = series.bullets.push(new am4charts.Bullet());
+				var image = bullet.createChild(am4core.Image);
+				image.horizontalCenter = "middle";
+				image.verticalCenter = "bottom";
+				image.dy = 20;
+				image.y = am4core.percent(100);
+				image.propertyFields.href = "bullet";
+				image.tooltipText = series.columns.template.tooltipText;
+				image.propertyFields.fill = "color";
+				image.filters.push(new am4core.DropShadowFilter());
+
+			}); // end am4core.ready()
+</script>
+
+
+
 </head>
 
 <body id="page-top">
@@ -23,7 +107,8 @@
 		<jsp:include page="../fixSection/header.jsp" />
 		<!-- Begin Page Content -->
 		<div class="container-fluid">
-
+			<!-- HTML -->
+			<!-- <div class="mb-4" style="width:150px; height:150px; display:inline-block;" id="chartdiv"></div> -->
 			<!-- Page Heading -->
 			<h1 class="h3 mb-2 text-gray-800">회원 관리</h1>
 			<p class="mb-4">
@@ -38,7 +123,7 @@
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-primary">회원 리스트</h6>
 					<!-- 오프 set 이동시켜준다 -->
-					<div class="row" style="margin-top: 10px;">
+					<!-- <div class="row" style="margin-top: 10px;">
 						<div class=".col-auto">
 							<a class="btn btn-info btn-icon-split"> <span class="text"
 								style="color: white;" id="reg">회원등록</span></a> <a
@@ -53,7 +138,7 @@
 								배정되지 않은수: <span id="NULLT"></span>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -65,7 +150,7 @@
 									<th>회원이름</th>
 									<th>폰번호</th>
 									<th>가입일</th>
-									<th>수정일</th>
+									<!-- <th>수정일</th> -->
 									<th>진행상태</th>
 									<th>발주유무</th>
 									<th>메모</th>
@@ -73,16 +158,27 @@
 								</tr>
 							</thead>
 							<tbody>
-
+								<c:forEach items="${memberList}" var="member">
+									<tr class="row_table">
+										<td><c:out value="${member.m_num}" /></td>
+										<td><c:out value="${member.m_name}" /></td>
+										<td><c:out value="${member.phone}" /></td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="${member.reg_date}" /></td>
+										<%-- <td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="${member.update_date}" /></td> --%>
+										<td><c:out value="${member.m_state}" /></td>
+										<td><c:out value="${member.m_order}" /></td>
+										<td><c:out value="${member.memo}" /></td>
+										<td><c:out value="${member.e_id}" /></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 
 						</table>
 					</div>
 				</div>
 			</div>
-
-
-
 
 		</div>
 		<!-- /.container-fluid -->
@@ -92,6 +188,40 @@
 		<jsp:include page="../fixSection/footer.jsp" />
 
 	</div>
+	<script>
+		$(function() {
 
+			// 상세보기 , table init
+			var table = $("#dataTable").DataTable({
+				"fnRowCallback" : function(row, data, dataIndex) {
+					console.log(row);
+					if (data[8] == '') {
+						$(row).css("color", "#9F81F7");
+					}
+				},
+				"bDestroy" : true
+			});
+
+			// 회원 정보 상세보기
+			$('#dataTable tbody').on(
+					'click',
+					'tr',
+					function() {
+
+						console.log($(this));
+
+						var data = table.row(this).data();
+
+						$(this).css("color", "#F78181");
+
+						console.table(data);
+						var mData = data[0];
+
+						window.open("/common/memberChild?mData=" + mData,
+								"memberFind", "width=1000,height=800");
+
+					});
+		})
+	</script>
 </body>
 </html>

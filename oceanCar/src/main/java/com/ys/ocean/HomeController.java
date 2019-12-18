@@ -9,12 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ys.ocean.service.EmployeeService;
 import com.ys.ocean.service.MemberService;
 import com.ys.ocean.vo.MemberVO;
 
@@ -32,6 +34,8 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	private MemberService memberService;
+	
+	private EmployeeService employeeService;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -146,13 +150,14 @@ public class HomeController {
 	
 	
 	
-	// 맴버부분 ================================================================
+	// 직원부분 ================================================================
 	// 로그인 페이지 이동
 		@RequestMapping(value = "/move/employee/managerMember", method = RequestMethod.GET)
-		public String moveManagerMember(Model model) {
+		public String moveManagerMember(Model model , @RequestParam("e_id") String e_id) {
 			logger.info("직원 회원관리");
-
+			
+			model.addAttribute("memberList",employeeService.employeeManagerList(e_id));
 			return "/employee/managerMember";
 		}
-
+		
 }
