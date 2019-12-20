@@ -28,19 +28,19 @@ public class MemberService {
 		return mapper.memberGetList();
 	}
 
-	// È¸¿ø Á¤º¸ ¹ßÁÖ Á¤º¸ µé°í¿À±â
+	// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public MemberFindVO memberAllFind(@Param("m_num") String m_num) {
 
 		return mapper.memberAllFind(m_num);
 
 	}
 
-	// È¸¿øµé ÇöÈ²
+	// È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²
 	public HashMap<String, Object> memberCount() {
 		return mapper.memberCount();
 	}
 
-	// ¹èÁ¤µÈ Á÷¿øÀÌ ¾ø´Â È¸¿øµé
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½
 	public List<MemberVO> memberNon() {
 
 		return mapper.memberNon();
@@ -50,24 +50,24 @@ public class MemberService {
 		return mapper.bindEmployee();
 	}
 
-	// ÀÎ¼­Æ® ¸É¹ö
+	// ï¿½Î¼ï¿½Æ® ï¿½É¹ï¿½
 	public int insertMember(MemberVO memberVO) {
 
 		return mapper.insertMember(memberVO);
 	}
 
-	// ¹èÄ¡µÈ ÀÎ¿ø ¾÷µ¥ÀÌÅÍ
+	// ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int disMemberUpdate(Map param) {
 		return mapper.disMemberUpdate(param);
 	}
 
-	// ¹ßÁÖÃ³¸®
+	// ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
 	@Transactional(timeout = 10)
 	public int insertBal(Oorder param) {
 
 		Map map = new HashMap<String, String>();
 
-		// ¤À¤À
+		// ï¿½ï¿½ï¿½ï¿½
 		mapper.insertBal(param);
 
 		map.put("m_num", param.getM_num());
@@ -77,8 +77,8 @@ public class MemberService {
 
 		map.put("e_id", param.getE_id());
 		map.put("price", param.getPrice());
-		// ¤À¤À
-		System.out.println("Âï°í : " + map);
+		// ï¿½ï¿½ï¿½ï¿½
+		System.out.println("ï¿½ï¿½ï¿½ : " + map);
 
 		// hh
 		int n = this.updateOrderPrice(map);
@@ -93,12 +93,12 @@ public class MemberService {
 		return n;
 	}
 
-	// È¸¿ø ¸Þ¸ð µî·ÏÇÏ±â
+	// È¸ï¿½ï¿½ ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	public int insertMemo(Map param) {
 		return mapper.insertMemo(param);
 	}
 
-	// È¸¿ø ¸Þ¸ð Á¤º¸ µé°í¿À±â
+	// È¸ï¿½ï¿½ ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public List<MemberMemo> selectMemoList(@Param("m_num") String m_num) {
 		
 		return mapper.selectMemoList(m_num);

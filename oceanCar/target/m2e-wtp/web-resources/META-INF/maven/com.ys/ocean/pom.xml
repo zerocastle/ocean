@@ -109,12 +109,20 @@
 
 
 		<!--ojdbc6 -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>12.1.0.1-atlassian-hosted</version>
+  		<!-- https://mvnrepository.com/artifact/com.oracle.jdbc/ojdbc6 -->
+<!-- 		<dependency>
+		    <groupId>com.oracle.jdbc</groupId>
+		    <artifactId>ojdbc6</artifactId>
+		    <version>12.1.0.2</version>
+		    <scope>runtime</scope>
+		</dependency> -->
+		
+  		<dependency>
+		    <groupId>oracle</groupId>
+		    <artifactId>ojdbc6</artifactId>
+		    <version>11.2.0.3</version>
 		</dependency>
-
+		
 		<!-- Redis - NodeJS 세션 공유용 -->
 		<dependency>
 			<groupId>redis.clients</groupId>

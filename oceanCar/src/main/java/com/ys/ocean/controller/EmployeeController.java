@@ -34,9 +34,9 @@ public class EmployeeController {
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET }, produces = {
 			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public String loginEmployee(Model model, @RequestBody EmployeeVO vo, HttpServletRequest request) throws Exception {
-		logger.info("·Î±×ÀÎ");
+		logger.info("ï¿½Î±ï¿½ï¿½ï¿½");
 
-		System.out.println("³Ñ¾î¿Â °ª : " + vo);
+		System.out.println("ï¿½Ñ¾ï¿½ï¿½ ï¿½ï¿½ : " + vo);
 
 		// String resultJsonObject = null;
 		HttpSession session = request.getSession();
@@ -57,7 +57,7 @@ public class EmployeeController {
 		}
 	}
 
-	// ·Î±× ¾Æ¿ô
+	// ï¿½Î±ï¿½ ï¿½Æ¿ï¿½
 
 	@GetMapping(value = "/logout")
 	public String logoutEmployee(Model model, HttpServletRequest request) {
@@ -67,10 +67,38 @@ public class EmployeeController {
 		EmployeeVO vo = (EmployeeVO) session.getAttribute("Employee");
 
 		session.invalidate();
-		System.out.println("session°ªÀ» Áö¿ö ÁÝ´Ï´Ù .");
+		System.out.println("sessionï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý´Ï´ï¿½ .");
 		return "/index";
 
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/dataUpdate", method = { RequestMethod.POST, RequestMethod.GET }, produces = {
+			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public String dataUpdate(@RequestBody EmployeeVO vo) throws Exception {
+		logger.info("dataUpdate");
+		logger.info("EmployeeVO : " + vo);
+		
+		int num = service.dataUpdate(vo);
+		JSONObject jsonObejct = new JSONObject();
+		
+		System.out.println("num : " + num);
+
+		return jsonObejct.toString();
+	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/dataDelete", method = { RequestMethod.POST, RequestMethod.GET }, produces = {
+			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public String dataDelete(@RequestBody EmployeeVO vo) throws Exception {
+		logger.info("dataUpdate");
+		logger.info("EmployeeVO : " + vo);
+		
+		int num = service.dataDelete(vo);
+		JSONObject jsonObejct = new JSONObject();
+		
+		System.out.println("num : " + num);
+
+		return jsonObejct.toString();
+	}
 }
