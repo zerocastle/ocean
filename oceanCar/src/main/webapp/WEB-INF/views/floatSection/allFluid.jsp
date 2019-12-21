@@ -1,82 +1,250 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!-- Begin Page Content -->
-
-<!-- <link href='/resources/fullcalendar-4.3.1/packages/core/main.css'
-	rel='stylesheet' />
-<link href='/resources/fullcalendar-4.3.1/packages/daygrid/main.css'
-	rel='stylesheet' />
-<script src='/resources/fullcalendar-4.3.1/packages/core/main.js'></script>
-<script src='/resources/fullcalendar-4.3.1/packages/core/main.js'></script>
-<script src='/resources/fullcalendar-4.3.1/packages/daygrid/main.js'></script> -->
-
-
-<script
-	src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.2.0/main.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.2.0/main.js"></script>
-
-<!-- interaction plugin must be included after core -->
-<script
-	src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.2.0/main.js"></script>
-
-<link
-	href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.2.0/main.min.css"
-	rel="stylesheet" />
-	
-	
 <script src="/resources/calendar/a.js"></script>
-
+<link href="/resources/calendar/b.css" rel="stylesheet">
 <script>
-	$(function() {
-		// page is now ready, initialize the calendar...
+	$(document)
+			.ready(
+					function() {
+						var date = new Date();
+						var d = date.getDate();
+						var m = date.getMonth();
+						var y = date.getFullYear();
+						
+						var caVo = ${calendar};
+						console.log(caVo);
+						for(var i = 0; i < caVo.length; i++){
+							caVo[i].start = new Date(caVo[i].start.time);
+						}
+						console.log(caVo);
+						/*  className colors
+						
+						className: default(transparent), important(red), chill(pink), success(green), info(blue)
+						
+						 */
 
-		var calendarEl = document.getElementById('calendar');
+						/* initialize the external events
+						-----------------------------------------------------------------*/
 
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			locale : "ko",
-			plugins : [ 'interaction', 'dayGrid' ],
-			header : {
-				left : 'prevYear,prev,next,nextYear today',
-				center : 'title',
-				right : 'dayGridMonth,dayGridWeek,dayGridDay'
-			},
-			navLinks : false, // can click day/week names to navigate views
-			editable : true,
-			eventLimit : true, // allow "more" link when too many events
-			selectHelper : true,
-			selectable : true,
-			dateClick : function(start, end, allDay) {
-				var title = prompt('Event Title:');
-				if (title) {
-					calendar.fullCalendar('renderEvent',
-						{
-							title: title,
-							start: start,
-							end: end,
-							allDay: allDay
-						},
-						true // make the event "stick"
-					);
+						$('#external-events div.external-event').each(
+								function() {
+
+									// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+									// it doesn't need to have a start or end
+									var eventObject = {
+										title : $.trim($(this).text())
+									// use the element's text as the event title
+									};
+
+									// store the Event Object in the DOM element so we can get to it later
+									$(this).data('eventObject', eventObject);
+
+									// make the event draggable using jQuery UI
+									$(this).draggable({
+										zIndex : 999,
+										revert : true, // will cause the event to go back to its
+										revertDuration : 0
+									//  original position after the drag
+									});
+
+								});
+
+						/* initialize the calendar
+						-----------------------------------------------------------------*/
+
+						var calendar = $('#calendar')
+								.fullCalendar(
+										{
+											header : {
+												left : 'title',
+												center : 'agendaDay,agendaWeek,month',
+												right : 'prev,next today'
+											},
+											editable : true,
+											firstDay : 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+											selectable : true,
+											defaultView : 'month',
+
+											axisFormat : 'h:mm',
+											columnFormat : {
+												month : 'ddd', // Mon
+												week : 'ddd d', // Mon 7
+												day : 'dddd M/d', // Monday 9/7
+												agendaDay : 'dddd d'
+											},
+											titleFormat : {
+												month : 'MMMM yyyy', // September 2009
+												week : "MMMM yyyy", // September 2009
+												day : 'MMMM yyyy' // Tuesday, Sep 8, 2009
+											},
+											allDaySlot : false,
+											selectHelper : true,
+											locale : "ko",
+											select : function(start, end,
+													allDay) {
+												var title = prompt('Event Title:');
+												if (title) {
+													var mo = calendar
+															.fullCalendar(
+																	'renderEvent',
+																	{
+																		title : title,
+																		start : start,
+																		end : end,
+																		allDay : allDay
+																	}, true // make the event "stick"
+															);
+													console.log(title + ''
+															+ start + '' + end
+															+ '' + allDay);
+													console.log(mo);
+													//momo
+													var insertData = {
+															"start" : start,
+															"title" : title
+													};
+													promise_function(insertData).then(getListFunction);
+													
+												}
+												calendar
+														.fullCalendar('unselect');
+											},
+											droppable : true, // this allows things to be dropped onto the calendar !!!
+											drop : function(date, allDay) { // this function is called when something is dropped
+
+												// retrieve the dropped element's stored Event Object
+												var originalEventObject = $(
+														this).data(
+														'eventObject');
+
+												// we need to copy it, so that multiple events don't have a reference to the same object
+												var copiedEventObject = $
+														.extend({},
+																originalEventObject);
+
+												// assign it the date that was reported
+												copiedEventObject.start = date;
+												copiedEventObject.allDay = allDay;
+
+												// render the event on the calendar
+												// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+												$('#calendar')
+														.fullCalendar(
+																'renderEvent',
+																copiedEventObject,
+																true);
+
+												// is the "remove after drop" checkbox checked?
+												if ($('#drop-remove').is(
+														':checked')) {
+													// if so, remove the element from the "Draggable Events" list
+													$(this).remove();
+												}
+
+											},
+
+											events : caVo
+										});
+
+					});
+
+	//프로미스 인서트
+	function promise_function(insertData) {
+		return new Promise(function(resolve, reject) {
+			$.ajax({
+				type : "post",
+				url : "/calendar/insert",
+				data : JSON.stringify(insertData),
+				dataType : "json",
+				contentType : "application/json;charset=UTF-8",
+				success : function(data){
+					console.log(data);
+					//resolve(data);
 				}
-				calendar.fullCalendar('unselect');
-			},
-			events : [ {
-				title : 'Event1',
-				start : '2019-12-24'
-			}, {
-				title : 'Event2',
-				start : '2019-12-25'
-			} ],
-			color : 'yellow', // an option!
-			textColor : 'black' // an option!
+			});
 		});
-
-		calendar.render();
-
-	});
+    }
+	// 프로미스 값가져오기
+	function getListFunction(){
+		return new Promise(function(resolve, reject) {
+			$.ajax({
+				type : "GET",
+				url : "/calendar/getList",
+				data : JSON.stringify(insertData),
+				dataType : "json",
+				contentType : "application/json;charset=UTF-8",
+				success : function(data){
+					console.log(data);
+					//resolve(data);
+				}
+			});
+		});
+	}
 </script>
+
+<style>
+style>body {
+	margin-bottom: 40px;
+	margin-top: 40px;
+	text-align: center;
+	font-size: 14px;
+	font-family: 'Roboto', sans-serif;
+	background:
+		url(http://www.digiphotohub.com/wp-content/uploads/2015/09/bigstock-Abstract-Blurred-Background-Of-92820527.jpg);
+}
+
+#wrap {
+	width: 1100px;
+	margin: 0 auto;
+}
+
+#external-events {
+	float: left;
+	width: 150px;
+	padding: 0 10px;
+	text-align: left;
+}
+
+#external-events h4 {
+	font-size: 16px;
+	margin-top: 0;
+	padding-top: 1em;
+}
+
+.external-event { /* try to mimick the look of a real event */
+	margin: 10px 0;
+	padding: 2px 4px;
+	background: #3366CC;
+	color: #fff;
+	font-size: .85em;
+	cursor: pointer;
+}
+
+#external-events p {
+	margin: 1.5em 0;
+	font-size: 11px;
+	color: #666;
+}
+
+#external-events p input {
+	margin: 0;
+	vertical-align: middle;
+}
+
+#calendar {
+	/* 		float: right; */
+	margin: 0 auto;
+	width: 900px;
+	background-color: #FFFFFF;
+	border-radius: 6px;
+	box-shadow: 0 1px 2px #C3C3C3;
+	-webkit-box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+	-moz-box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+	box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+}
+</style>
+
 
 
 <div class="container-fluid">

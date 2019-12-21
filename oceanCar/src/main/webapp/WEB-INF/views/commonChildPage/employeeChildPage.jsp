@@ -129,18 +129,8 @@ a:hover {
 						<tr align='center' height='30'
 							style='COLOR: #FFFFFF; font-weight: bold;' bgcolor='#6E6E6E'>
 
-							<td width='33%' style='background-color: #000; cursor: pointer;'
-								onclick="JAVASCRIP:location.href='/MEMBER/member_info.php?MEM_CODE=2804&MEM_ID=01041892729'">
+							<td width='33%' style='background-color: #000; cursor: pointer;'>
 								직원 정보</td>
-							<td width='33%'
-								style='background-color: #6E6E6E; cursor: pointer; border-left: 1px solid #C9C9C9;'
-								onclick="JAVASCRIP:location.href='/MEMBER/member_image.php?MEM_CODE=2804&MEM_ID=01041892729'">
-								이미지 정보</td>
-							<td width='33%'
-								style='background-color: #6E6E6E; cursor: pointer; border-left: 1px solid #C9C9C9;'
-								onclick="JAVASCRIP:location.href='/MEMBER/member_qna.php?MEM_CODE=2804&MEM_ID=01041892729'">
-								회원 문의</td>
-
 						</tr>
 					</table>
 

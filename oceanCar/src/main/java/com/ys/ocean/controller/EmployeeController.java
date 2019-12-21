@@ -34,9 +34,9 @@ public class EmployeeController {
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET }, produces = {
 			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public String loginEmployee(Model model, @RequestBody EmployeeVO vo, HttpServletRequest request) throws Exception {
-		logger.info("�α���");
+		logger.info("占싸깍옙占쏙옙");
 
-		System.out.println("�Ѿ�� �� : " + vo);
+		System.out.println("占싼억옙占� 占쏙옙 : " + vo);
 
 		// String resultJsonObject = null;
 		HttpSession session = request.getSession();
@@ -57,7 +57,7 @@ public class EmployeeController {
 		}
 	}
 
-	// �α� �ƿ�
+	// 占싸깍옙 占싣울옙
 
 	@GetMapping(value = "/logout")
 	public String logoutEmployee(Model model, HttpServletRequest request) {
@@ -67,7 +67,7 @@ public class EmployeeController {
 		EmployeeVO vo = (EmployeeVO) session.getAttribute("Employee");
 
 		session.invalidate();
-		System.out.println("session���� ���� �ݴϴ� .");
+		System.out.println("session占쏙옙占쏙옙 占쏙옙占쏙옙 占쌥니댐옙 .");
 		return "/index";
 
 	}
@@ -101,4 +101,5 @@ public class EmployeeController {
 
 		return jsonObejct.toString();
 	}
+	
 }

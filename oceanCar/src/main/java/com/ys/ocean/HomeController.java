@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ys.ocean.service.EmployeeService;
 import com.ys.ocean.service.MemberService;
+import com.ys.ocean.vo.CalendarVO;
 import com.ys.ocean.vo.EmployeeVO;
 import com.ys.ocean.vo.MemberVO;
 
@@ -35,7 +36,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	private MemberService memberService;
-	
+
 	private EmployeeService employeeService;
 
 	/**
@@ -44,8 +45,8 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		logger.info("占싸듸옙占쏙옙 호占쏙옙占싹깍옙 ");
-		model.addAttribute("employee",memberService.selectRank());
-
+		model.addAttribute("employee", memberService.selectRank());
+		model.addAttribute("calendar", JSONArray.fromObject(memberService.getCalendarList()).toString());
 		return "index";
 	}
 
@@ -72,8 +73,8 @@ public class HomeController {
 	// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占�
 	@RequestMapping(value = "/move/master/monthChart", method = RequestMethod.GET)
 	public String moveMasterEmployee(Model model) {
-		
-		model.addAttribute("chart",JSONArray.fromObject(memberService.monthGraph()));
+
+		model.addAttribute("chart", JSONArray.fromObject(memberService.monthGraph()));
 
 		return "/master/chart";
 	}
@@ -95,10 +96,10 @@ public class HomeController {
 	// 분배하기
 	@ResponseBody
 	@RequestMapping(value = "/member/update/distribute", method = RequestMethod.POST)
-	public String updateDistribute(Model model,  @RequestParam(value="params[]") List<String> param) {
+	public String updateDistribute(Model model, @RequestParam(value = "params[]") List<String> param) {
 		System.out.println(param);
 		HashMap map = new HashMap<>();
-		map.put("employee",param.get(param.size() - 1));
+		map.put("employee", param.get(param.size() - 1));
 		map.put("params", param);
 		System.out.println("占쏙옙 : " + map);
 		int cnt = memberService.disMemberUpdate(map);
@@ -124,10 +125,10 @@ public class HomeController {
 		JSONSerializer jsonSerializer = new JSONSerializer();
 
 		model.addAttribute("key", JSONArray.fromObject(memberService.memberAllFind(mData)));
-		model.addAttribute("memo",memberService.selectMemoList(mData)); 
+		model.addAttribute("memo", memberService.selectMemoList(mData));
 		return "/commonChildPage/memberChildPage";
 	}
-	
+
 	// 占쏙옙占쏙옙 회占쏙옙 占쌘쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/common/employeeChild", method = RequestMethod.GET)
 	public String employeeChild(Model model, @Param("eData") String eData) {
@@ -139,8 +140,6 @@ public class HomeController {
 		model.addAttribute("key", JSONArray.fromObject(employeeService.employeeFind(eData)));
 		return "/commonChildPage/employeeChildPage";
 	}
-	
-	
 
 	// 회占쏙옙占쏙옙占� 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/move/master/regMember", method = RequestMethod.GET)
@@ -150,7 +149,7 @@ public class HomeController {
 
 		return "/commonChildPage/regMember";
 	}
-	
+
 	// 회占쏙옙占쏙옙占� 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/move/master/regEmployee", method = RequestMethod.GET)
 	public String moveInsertEmployee(Model model) {
@@ -173,32 +172,48 @@ public class HomeController {
 		object.put("signal", cnt);
 		return object.toString();
 	}
-	
-	// 회占쏙옙占쏙옙占�
-		@ResponseBody
-		@RequestMapping(value = "/master/insertEmployee", method = RequestMethod.POST)
-		public String insertEmployee(Model model, @RequestBody EmployeeVO employeeVO) {
-			logger.info("EmployeeVO : employeeVO");
-			System.out.println(employeeVO);
 
-			int cnt = employeeService.insertEmployee(employeeVO);
-			System.out.println();
-			JSONObject object = new JSONObject();
-			object.put("signal", cnt);
-			return object.toString();
-		}
-	
-	
-	
-	
+	// 회占쏙옙占쏙옙占�
+	@ResponseBody
+	@RequestMapping(value = "/master/insertEmployee", method = RequestMethod.POST)
+	public String insertEmployee(Model model, @RequestBody EmployeeVO employeeVO) {
+		logger.info("EmployeeVO : employeeVO");
+		System.out.println(employeeVO);
+
+		int cnt = employeeService.insertEmployee(employeeVO);
+		System.out.println();
+		JSONObject object = new JSONObject();
+		object.put("signal", cnt);
+		return object.toString();
+	}
+
+	// 켈린더 인서트
+	@ResponseBody
+	@RequestMapping(value = "/calendar/insert", method = { RequestMethod.POST, RequestMethod.GET }, produces = {
+			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public void insertCalendar(Model model, @RequestBody CalendarVO param) {
+
+		System.out.println(param);
+		memberService.insertCalendar(param);
+	}
+
+	// 켈린더 리스트 불러오기
+	@ResponseBody
+	@RequestMapping(value = "/calendar/getList", method = { RequestMethod.POST, RequestMethod.GET }, produces = {
+			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public String getCalendarList(Model model, @RequestBody CalendarVO param) {
+
+		return JSONArray.fromObject(memberService.getCalendarList()).toString();
+	}
+
 	// 占쏙옙占쏙옙占싸븝옙 ================================================================
 	// 占싸깍옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
-		@RequestMapping(value = "/move/employee/managerMember", method = RequestMethod.GET)
-		public String moveManagerMember(Model model , @RequestParam("e_id") String e_id) {
-			logger.info("占쏙옙占쏙옙 회占쏙옙占쏙옙占쏙옙");
-			
-			model.addAttribute("memberList",employeeService.employeeManagerList(e_id));
-			return "/employee/managerMember";
-		}
-		
+	@RequestMapping(value = "/move/employee/managerMember", method = RequestMethod.GET)
+	public String moveManagerMember(Model model, @RequestParam("e_id") String e_id) {
+		logger.info("占쏙옙占쏙옙 회占쏙옙占쏙옙占쏙옙");
+
+		model.addAttribute("memberList", employeeService.employeeManagerList(e_id));
+		return "/employee/managerMember";
+	}
+
 }

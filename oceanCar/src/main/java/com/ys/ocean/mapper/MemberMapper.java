@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ys.ocean.vo.CalendarVO;
 import com.ys.ocean.vo.EmployeeVO;
 import com.ys.ocean.vo.MemberFindVO;
 import com.ys.ocean.vo.MemberMemo;
@@ -57,4 +58,9 @@ public interface MemberMapper {
 	//직원 랭크처리
 	public List<EmployeeVO> selectRank();
 	
+	//켈린더 넣기
+	public int insertCalendar(CalendarVO param);
+	
+	//켈린더 리스트 불러오기
+	public List<CalendarVO> getCalendarList();
 }

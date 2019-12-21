@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ys.ocean.mapper.MemberMapper;
+import com.ys.ocean.vo.CalendarVO;
 import com.ys.ocean.vo.EmployeeVO;
 import com.ys.ocean.vo.Key;
 import com.ys.ocean.vo.MemberFindVO;
@@ -107,13 +108,24 @@ public class MemberService {
 
 	// 월간 그래프 출력
 	public List<HashMap<String, String>> monthGraph() {
-		
+
 		return mapper.monthGraph();
 
 	}
-	//직원 랭크
-	public List<EmployeeVO> selectRank(){
+
+	// 직원 랭크
+	public List<EmployeeVO> selectRank() {
 		return mapper.selectRank();
 	}
 
+	// 켈린더 넣기
+	public int insertCalendar(CalendarVO param) {
+		return mapper.insertCalendar(param);
+	}
+	
+	//켈린더 리스트 불러오기
+	public List<CalendarVO> getCalendarList(){
+		
+		return mapper.getCalendarList();
+	}
 }
