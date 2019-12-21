@@ -136,6 +136,24 @@
 		]]>
 		WHERE E_ID = #{e_id}
 	</update>
+	
+	<!-- 출고처리 -->
+	<update id="updateOrder" parameterType="MemberVO">
+		UPDATE MEMBER
+		SET M_ORDER = '출고'
+		WHERE M_NUM = #{m_num}
+		<selectKey keyProperty="m_num" resultType="String"
+			order="AFTER">
+			SELECT M_NUM FROM MEMBER WHERE M_NUM = #{m_num}
+		</selectKey>
+	</update>
+	
+	<!-- 출고일 업데이트 -->
+	<update id="updateOrderDate">
+		UPDATE OORDER
+		SET RELEASED = SYSDATE
+		WHERE M_NUM = #{m_num}
+	</update>
 
 	<!-- 회원 메모등록 -->
 	<insert id="insertMemo" parameterType="hashmap">

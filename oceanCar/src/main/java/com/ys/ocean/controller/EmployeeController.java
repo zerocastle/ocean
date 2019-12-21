@@ -68,7 +68,7 @@ public class EmployeeController {
 
 		session.invalidate();
 		System.out.println("session占쏙옙占쏙옙 占쏙옙占쏙옙 占쌥니댐옙 .");
-		return "/index";
+		return "index";
 
 	}
 	

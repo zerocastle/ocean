@@ -10,12 +10,18 @@
 		WHERE e_id = #{e_id} AND PW = #{pw}
 	</select>
 
-	<!-- 내 회원들 정보 들고오기-->
+	<!-- 내 회원들 정보 들고오기 -->
 	<select id="employeeManagerList" resultType="MemberVO">
 		SELECT a.*
-		FROM MEMBER a , EMPLOYEE b
+		FROM
+		MEMBER a , EMPLOYEE b
 		WHERE b.e_id = a.e_id
 		AND b.e_id = #{e_id}
+	</select>
+
+	<select id="ship" resultType="EmployeeVO">
+		SELECT PAYMENT FROM EMPLOYEE
+		WHERE E_ID = #{e_id}
 	</select>
 
 	<select id="getEmployeeListService" parameterType="EmployeeVO"
@@ -23,28 +29,30 @@
 		SELECT * FROM EMPLOYEE
 		ORDER BY REG_DATE DESC
 	</select>
-	
+
 	<select id="employeeFind" resultType="EmployeeVO">
 		SELECT * FROM EMPLOYEE
 		WHERE e_id = #{e_id}
 		ORDER BY REG_DATE DESC
 	</select>
-	
+
 	<update id="dataUpdate" parameterType="EmployeeVO">
 		UPDATE EMPLOYEE
-		SET phone = #{phone}, pw = #{pw}, name = #{name}
+		SET phone =
+		#{phone}, pw = #{pw}, name = #{name}
 		WHERE e_id = #{e_id}
 	</update>
-	
+
 	<delete id="dataDelete" parameterType="EmployeeVO">
 		DELETE FROM EMPLOYEE
-        WHERE e_id = #{e_id}
-    </delete>
-    
-    <!-- 직원 등록 -->
+		WHERE e_id = #{e_id}
+	</delete>
+
+	<!-- 직원 등록 -->
 	<insert id="insertEmployee" parameterType="EmployeeVO">
 		INSERT INTO
 		EMPLOYEE(E_ID,PW,NAME,PHONE,REG_DATE,PAYMENT,E_TYPE)
-		VALUES (#{e_id}, #{pw}, #{name}, #{phone}, SYSDATE, 0, '0')
+		VALUES (#{e_id},
+		#{pw}, #{name}, #{phone}, SYSDATE, 0, '0')
 	</insert>
 </mapper>

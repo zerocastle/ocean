@@ -1,6 +1,7 @@
 package com.ys.ocean.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,12 +17,17 @@ public interface EmployeeMapper {
 
 	public List<EmployeeVO> getEmployeeListService();
 	
-	// 직원 클릭 팝업창 --> 직원 정보 가져오기
+	// 자기 회원들 들고오기
 	public List<EmployeeVO> employeeFind(@Param("e_id") String e_id);
-
+	
+	// Z
+	public EmployeeVO ship(@Param("e_id") String e_id);
+	
 	public int dataUpdate(EmployeeVO vo);
 
 	public int dataDelete(EmployeeVO vo);
 
 	public int insertEmployee(EmployeeVO employeeVO);
+	
+	 
 }

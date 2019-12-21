@@ -35,15 +35,15 @@
 
 
 	<!-- 인터셉터 처리 -->
-	<!-- <interceptors>
+	 <interceptors>
 		<interceptor>
 			<mapping path="/move/**" />
-			<exclude-mapping path="/login/**" />
-			<exclude-mapping path="/register/**" />
+			<!-- <exclude-mapping path="/login/**" /> -->
+			<!-- <exclude-mapping path="/register/**" /> -->
 			<beans:bean id="commonInterceptor"
 				class="com.ys.ocean.commonInterCeptor.CommonInterCeptor"></beans:bean>
 		</interceptor>
-	</interceptors> -->
+	</interceptors> 
 
 	<!-- AOP 컴포넌트 스캔 -->
 	<context:component-scan

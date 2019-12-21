@@ -40,11 +40,12 @@
 				<!-- <a class="collapse-item" href="forgot-password.html">내 실적 보기</a> --> <a
 					class="collapse-item" href="/move/employee/managerMember?e_id=${sessionScope.employee.e_id }">내 회원 관리</a>
 				<div class="collapse-divider"></div>
+	<c:if test="${sessionScope.employee.e_type eq '1' }">
 				<h4 class="collapse-header">마스터메뉴</h4>
 				<!-- <a class="collapse-item" href="404.html">매출액</a> --> <a
 					class="collapse-item" href="/move/master/memberManager">회원리스트
 					관리</a> <a class="collapse-item" href="/move/master/employeeManager">직원관리</a>
-					<a class="collapse-item" href="/move/master/employeeManager">발주처리관리 </a>
+					<!-- <a class="collapse-item" href="/move/master/employeeManager">발주처리관리 </a> -->
 					
 			</div>
 		</div></li>
@@ -54,6 +55,7 @@
 		href="/move/master/monthChart"> <i class="fas fa-fw fa-chart-area"></i>
 			<span style="font-size : large">매출액</span>
 	</a></li>
+	</c:if>
 
 	<!-- Nav Item - Tables -->
 	<!-- <li class="nav-item"><a class="nav-link" href="tables.html"> <i

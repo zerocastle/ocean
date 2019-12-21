@@ -45,6 +45,12 @@ public interface MemberMapper {
 	
 	//발주처리후 실적 쌓기
 	public int updateOrderPrice(Map param);
+	
+	//출고 처리
+	public int updateOrder(Map param);
+	
+	//출고 날짜 업데이트
+	public int updateOrderDate(Map param);
 
 	//회원 메모 등록하기
 	public int insertMemo (Map param);
@@ -63,4 +69,6 @@ public interface MemberMapper {
 	
 	//켈린더 리스트 불러오기
 	public List<CalendarVO> getCalendarList();
+	
+	
 }

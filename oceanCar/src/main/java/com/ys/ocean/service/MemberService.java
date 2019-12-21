@@ -68,7 +68,7 @@ public class MemberService {
 
 		Map map = new HashMap<String, String>();
 
-		// 占쏙옙占쏙옙
+		// 발주처리
 		mapper.insertBal(param);
 
 		map.put("m_num", param.getM_num());
@@ -81,7 +81,7 @@ public class MemberService {
 		// 占쏙옙占쏙옙
 		System.out.println("占쏙옙占� : " + map);
 
-		// hh
+		// 직원 금액 플플
 		int n = this.updateOrderPrice(map);
 
 		return n;
@@ -92,6 +92,22 @@ public class MemberService {
 		int n = mapper.updateOrderPrice(map);
 		System.out.println("n : " + n);
 		return n;
+	}
+
+	// 출고 처리
+	@Transactional
+	public int updateOrder(Map param) {
+		mapper.updateOrder(param);
+		String what = (String)param.get("m_num");
+		
+		param.put("m_num", what);
+		
+		return mapper.updateOrderDate(param);
+	}
+
+	// 출고 날짜 업데이트
+	public int updateOrderDate(Map param) {
+		return mapper.updateOrderDate(param);
 	}
 
 	// 회占쏙옙 占쌨몌옙 占쏙옙占쏙옙歐占�
@@ -122,10 +138,10 @@ public class MemberService {
 	public int insertCalendar(CalendarVO param) {
 		return mapper.insertCalendar(param);
 	}
-	
-	//켈린더 리스트 불러오기
-	public List<CalendarVO> getCalendarList(){
-		
+
+	// 켈린더 리스트 불러오기
+	public List<CalendarVO> getCalendarList() {
+
 		return mapper.getCalendarList();
 	}
 }

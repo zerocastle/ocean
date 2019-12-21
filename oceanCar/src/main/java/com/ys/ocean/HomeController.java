@@ -47,10 +47,10 @@ public class HomeController {
 		logger.info("占싸듸옙占쏙옙 호占쏙옙占싹깍옙 ");
 		model.addAttribute("employee", memberService.selectRank());
 		model.addAttribute("calendar", JSONArray.fromObject(memberService.getCalendarList()).toString());
-		return "index";
+		return "/index";
 	}
 
-	// 占쏙옙占쏙옙占쏙옙 회占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
+	// 회원관리이동
 	@RequestMapping(value = "/move/master/memberManager", method = RequestMethod.GET)
 	public String moveMasterMemberManager(Model model) {
 		logger.info("占쏙옙占쏙옙占쏙옙 : 회占쏙옙占쏙옙 占쏙옙占쏙옙");
@@ -60,7 +60,7 @@ public class HomeController {
 		return "/master/memberManager";
 	}
 
-	// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
+	// 지구언관리이동
 	@RequestMapping(value = "/move/master/employeeManager", method = RequestMethod.GET)
 	public String moveMasterEmployeeManager(Model model) {
 		logger.info("employeeManager");
@@ -70,7 +70,7 @@ public class HomeController {
 		return "/master/employeeManager";
 	}
 
-	// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占�
+	// 월매출 이동
 	@RequestMapping(value = "/move/master/monthChart", method = RequestMethod.GET)
 	public String moveMasterEmployee(Model model) {
 
@@ -108,7 +108,7 @@ public class HomeController {
 
 	}
 
-	// 占싸깍옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
+	// 공통 로그인
 	@RequestMapping(value = "/common/login", method = RequestMethod.GET)
 	public String moveLoginService(Model model) {
 		logger.info("占쏙옙占쏙옙占쏙옙 : 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙");
@@ -116,7 +116,7 @@ public class HomeController {
 		return "/login/login";
 	}
 
-	// 占쏙옙占쏙옙 회占쏙옙 占쌘쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
+	// 회원정보 뿌려주기
 	@RequestMapping(value = "/common/memberChild", method = RequestMethod.GET)
 	public String memberChild(Model model, @Param("mData") String mData) {
 		logger.info("회占쏙옙");
@@ -129,7 +129,7 @@ public class HomeController {
 		return "/commonChildPage/memberChildPage";
 	}
 
-	// 占쏙옙占쏙옙 회占쏙옙 占쌘쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
+	// 직원 정보 뿌려주기
 	@RequestMapping(value = "/common/employeeChild", method = RequestMethod.GET)
 	public String employeeChild(Model model, @Param("eData") String eData) {
 		logger.info("employeeChild");
@@ -207,12 +207,13 @@ public class HomeController {
 	}
 
 	// 占쏙옙占쏙옙占싸븝옙 ================================================================
-	// 占싸깍옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
+	// 직원이 관리하는 맴버 조회
 	@RequestMapping(value = "/move/employee/managerMember", method = RequestMethod.GET)
 	public String moveManagerMember(Model model, @RequestParam("e_id") String e_id) {
 		logger.info("占쏙옙占쏙옙 회占쏙옙占쏙옙占쏙옙");
 
 		model.addAttribute("memberList", employeeService.employeeManagerList(e_id));
+		model.addAttribute("ship",employeeService.ship(e_id));
 		return "/employee/managerMember";
 	}
 

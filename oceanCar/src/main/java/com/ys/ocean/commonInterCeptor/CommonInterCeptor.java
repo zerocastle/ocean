@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.ys.ocean.vo.EmployeeVO;
+
 /**
  * @author kys
  *
@@ -20,7 +22,13 @@ public class CommonInterCeptor extends HandlerInterceptorAdapter {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		System.out.println("·Î±× ÂïÇô¶ó");
-		if (session.getAttribute("member") == null) {
+		/*
+		 * EmployeeVO vo = (EmployeeVO)session.getAttribute("Employee"); String type =
+		 * vo.getE_type();
+		 * 
+		 * if(type.)
+		 */
+		if (session.getAttribute("employee") == null) {
 			response.sendRedirect("/?authority=no");
 			return false;
 		} else

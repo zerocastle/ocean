@@ -43,7 +43,7 @@
 						<div
 							class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 							aria-labelledby="userDropdown">
-							<a class="dropdown-item" href="#"> <i
+							<!-- <a class="dropdown-item" href="#"> <i
 								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 내 실적보기
 							</a>
 
@@ -51,9 +51,9 @@
 
 							<a class="dropdown-item" href="#"> <i
 								class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 회원 등록
-							</a>
+							</a> -->
 
-							<div class="dropdown-divider"></div>
+							<!-- <div class="dropdown-divider"></div> -->
 							<a class="dropdown-item" href="/employee/logout"> <i
 								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 								로그아웃
