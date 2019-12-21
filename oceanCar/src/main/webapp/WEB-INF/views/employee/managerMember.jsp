@@ -45,8 +45,16 @@
 							"name" : "John",
 							"points" : 35654,
 							"color" : chart.colors.next(),
-							"bullet" : "https://www.amcharts.com/lib/images/faces/A04.png"
+						},{
+							"name" : "james",
+							"points" : 35654,
+							"color" : chart.colors.next(),
+						},{
+							"name" : "alisa",
+							"points" : 35654,
+							"color" : chart.colors.next(),
 						}
+						
 				];
 
 				// Create axes
@@ -108,7 +116,9 @@
 		<!-- Begin Page Content -->
 		<div class="container-fluid">
 			<!-- HTML -->
-			<!-- <div class="mb-4" style="width:150px; height:150px; display:inline-block;" id="chartdiv"></div> -->
+			
+			<!-- class="mb-4" style="width:150px; height:150px; display:inline-block;" -->
+			<div  id="chartdiv"></div>
 			<!-- Page Heading -->
 			<h1 class="h3 mb-2 text-gray-800">회원 관리</h1>
 			<p class="mb-4">

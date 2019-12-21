@@ -137,8 +137,6 @@
 		WHERE E_ID = #{e_id}
 	</update>
 
-
-
 	<!-- 회원 메모등록 -->
 	<insert id="insertMemo" parameterType="hashmap">
 		INSERT INTO
@@ -149,9 +147,37 @@
 	<!-- 회원 메모 정보 들고 오기 -->
 	<select id="selectMemoList" resultType="MemberMemo">
 		SELECT * FROM
-		(SELECT A.*,ROW_NUMBER() OVER(ORDER BY CDATA DESC) RN
+		(SELECT
+		A.*,ROW_NUMBER() OVER(ORDER BY CDATA DESC) RN
 		FROM MEMBERMEMO A)
-		WHERE ROWNUM = 1
+		WHERE 1
+		= 1
+		AND ROWNUM = 1
+		AND M_NUM = #{m_num}
 	</select>
+
+	<!-- 월별 그래프 출력 -->
+	<select id="monthGraph" resultType="hashmap">
+		SELECT TO_CHAR(ORDER_DATE,
+		'YY-MM') as mth, SUM(PRICE) as sumP
+		FROM OORDER
+		GROUP BY
+		TO_CHAR(ORDER_DATE, 'YY-MM')
+		ORDER BY 1
+	</select>
+
+	<!-- 직원들 순위 측정 -->
+	<select id="selectRank" resultType="EmployeeVO">
+		SELECT *
+		FROM(
+		SELECT ROWNUM RN , a.* FROM EMPLOYEE a ORDER BY PAYMENT
+		DESC
+		)
+		<![CDATA[
+		WHERE RN < 5
+		]]>
+
+	</select>
+
 
 </mapper>

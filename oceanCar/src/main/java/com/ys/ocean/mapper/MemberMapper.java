@@ -50,4 +50,11 @@ public interface MemberMapper {
 	
 	//회원 메모 정보 들고오기
 	public List<MemberMemo> selectMemoList(@Param("m_num") String m_num);
+	
+	//월간 그래프 출력
+	public List<HashMap<String,String>> monthGraph();
+	
+	//직원 랭크처리
+	public List<EmployeeVO> selectRank();
+	
 }

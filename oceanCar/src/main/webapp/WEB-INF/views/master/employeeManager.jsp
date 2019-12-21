@@ -33,18 +33,18 @@
 
 			<!-- DataTales Example -->
 			<div class="card shadow mb-4">
-			
-			<div class="card-header py-3">
+
+				<div class="card-header py-3">
 					<!-- 오프 set 이동시켜준다 -->
 					<div class="row" style="margin-top: 10px;">
 						<div class=".col-auto">
-							<a class="btn btn-info btn-icon-split">
-								<span class="text" style="color: white;" id="reg">직원등록</span>
+							<a class="btn btn-info btn-icon-split"> <span class="text"
+								style="color: white;" id="reg">직원등록</span>
 							</a>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-primary">직원 리스트</h6>
 				</div>
@@ -133,69 +133,6 @@
 	});
 	
 	
-		$(function() {
-			$("#dataTable").DataTable({
-				destroy : true,
-				columns : [
-
-				{
-					"id" : 1,
-					"name" : "서울"
-				},
-
-				{
-					"id" : 2,
-					"name" : "경기도"
-				},
-
-				{
-					"id" : 3,
-					"name" : "충청남도"
-				},
-
-				{
-					"id" : 4,
-					"name" : "충청북도"
-				},
-
-				{
-					"id" : 5,
-					"name" : "전라남도"
-				},
-
-				{
-					"id" : 6,
-					"name" : "전라북도"
-				},
-
-				{
-					"id" : 7,
-					"name" : "경상남도"
-				},
-
-				{
-					"id" : 8,
-					"name" : "경상북도"
-				},
-
-				{
-					"id" : 9,
-					"name" : "강원도"
-				},
-
-				{
-					"id" : 10,
-					"name" : "제주도"
-				},
-
-				{
-					"id" : 99,
-					"name" : "해외"
-				}
-
-				]
-			})
-		})
 	</script>
 
 </body>

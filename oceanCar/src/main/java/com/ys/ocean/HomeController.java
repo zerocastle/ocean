@@ -43,22 +43,23 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
-		logger.info("�ε��� ȣ���ϱ� ");
+		logger.info("占싸듸옙占쏙옙 호占쏙옙占싹깍옙 ");
+		model.addAttribute("employee",memberService.selectRank());
 
 		return "index";
 	}
 
-	// ������ ȸ���� ���� ������ �̵�
+	// 占쏙옙占쏙옙占쏙옙 회占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/move/master/memberManager", method = RequestMethod.GET)
 	public String moveMasterMemberManager(Model model) {
-		logger.info("������ : ȸ���� ����");
+		logger.info("占쏙옙占쏙옙占쏙옙 : 회占쏙옙占쏙옙 占쏙옙占쏙옙");
 		JSONSerializer jsonSerializer = new JSONSerializer();
 		model.addAttribute("memberList", memberService.getMemberListService());
 		model.addAttribute("memberCount", jsonSerializer.toJSON(memberService.memberCount()));
 		return "/master/memberManager";
 	}
 
-	// ������ ������ ���� ������ �̵�
+	// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/move/master/employeeManager", method = RequestMethod.GET)
 	public String moveMasterEmployeeManager(Model model) {
 		logger.info("employeeManager");
@@ -68,14 +69,16 @@ public class HomeController {
 		return "/master/employeeManager";
 	}
 
-	// ������ �����
+	// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占�
 	@RequestMapping(value = "/move/master/monthChart", method = RequestMethod.GET)
 	public String moveMasterEmployee(Model model) {
+		
+		model.addAttribute("chart",JSONArray.fromObject(memberService.monthGraph()));
 
 		return "/master/chart";
 	}
 
-	// ���� ������ �й��ϱ�
+	// 분배하기 페이지동
 	@RequestMapping(value = "/move/master/distribution", method = RequestMethod.GET)
 	public String moveMasterDistribution(Model model) {
 		/*
@@ -89,7 +92,7 @@ public class HomeController {
 		return "/commonChildPage/distribution";
 	}
 
-	// ȸ�� �й��ϱ� ���� ������Ʈ
+	// 분배하기
 	@ResponseBody
 	@RequestMapping(value = "/member/update/distribute", method = RequestMethod.POST)
 	public String updateDistribute(Model model,  @RequestParam(value="params[]") List<String> param) {
@@ -97,25 +100,25 @@ public class HomeController {
 		HashMap map = new HashMap<>();
 		map.put("employee",param.get(param.size() - 1));
 		map.put("params", param);
-		System.out.println("�� : " + map);
+		System.out.println("占쏙옙 : " + map);
 		int cnt = memberService.disMemberUpdate(map);
-		System.out.println("��� �� : " + cnt);
+		System.out.println("占쏙옙占� 占쏙옙 : " + cnt);
 		return "";
 
 	}
 
-	// �α��� ������ �̵�
+	// 占싸깍옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/common/login", method = RequestMethod.GET)
 	public String moveLoginService(Model model) {
-		logger.info("������ : ������ ����");
+		logger.info("占쏙옙占쏙옙占쏙옙 : 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙");
 
 		return "/login/login";
 	}
 
-	// ���� ȸ�� �ڽ� ������ �̵�
+	// 占쏙옙占쏙옙 회占쏙옙 占쌘쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/common/memberChild", method = RequestMethod.GET)
 	public String memberChild(Model model, @Param("mData") String mData) {
-		logger.info("ȸ��");
+		logger.info("회占쏙옙");
 		logger.info(mData);
 		JSONObject jsonObj = new JSONObject();
 		JSONSerializer jsonSerializer = new JSONSerializer();
@@ -125,7 +128,7 @@ public class HomeController {
 		return "/commonChildPage/memberChildPage";
 	}
 	
-	// ���� ȸ�� �ڽ� ������ �̵�
+	// 占쏙옙占쏙옙 회占쏙옙 占쌘쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/common/employeeChild", method = RequestMethod.GET)
 	public String employeeChild(Model model, @Param("eData") String eData) {
 		logger.info("employeeChild");
@@ -139,7 +142,7 @@ public class HomeController {
 	
 	
 
-	// ȸ����� ������ �̵�
+	// 회占쏙옙占쏙옙占� 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/move/master/regMember", method = RequestMethod.GET)
 	public String moveInsertMember(Model model) {
 
@@ -148,7 +151,7 @@ public class HomeController {
 		return "/commonChildPage/regMember";
 	}
 	
-	// ȸ����� ������ �̵�
+	// 회占쏙옙占쏙옙占� 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@RequestMapping(value = "/move/master/regEmployee", method = RequestMethod.GET)
 	public String moveInsertEmployee(Model model) {
 
@@ -157,11 +160,11 @@ public class HomeController {
 		return "/commonChildPage/regEmployee";
 	}
 
-	// ȸ�����
+	// 회占쏙옙占쏙옙占�
 	@ResponseBody
 	@RequestMapping(value = "/master/insertMember", method = RequestMethod.POST)
 	public String insertMember(Model model, @RequestBody MemberVO memberVO) {
-		logger.info("������ : ������ ����");
+		logger.info("占쏙옙占쏙옙占쏙옙 : 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙");
 		System.out.println(memberVO);
 		JSONSerializer jsonSerializer = new JSONSerializer();
 		int cnt = memberService.insertMember(memberVO);
@@ -171,7 +174,7 @@ public class HomeController {
 		return object.toString();
 	}
 	
-	// ȸ�����
+	// 회占쏙옙占쏙옙占�
 		@ResponseBody
 		@RequestMapping(value = "/master/insertEmployee", method = RequestMethod.POST)
 		public String insertEmployee(Model model, @RequestBody EmployeeVO employeeVO) {
@@ -188,11 +191,11 @@ public class HomeController {
 	
 	
 	
-	// �����κ� ================================================================
-	// �α��� ������ �̵�
+	// 占쏙옙占쏙옙占싸븝옙 ================================================================
+	// 占싸깍옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
 		@RequestMapping(value = "/move/employee/managerMember", method = RequestMethod.GET)
 		public String moveManagerMember(Model model , @RequestParam("e_id") String e_id) {
-			logger.info("���� ȸ������");
+			logger.info("占쏙옙占쏙옙 회占쏙옙占쏙옙占쏙옙");
 			
 			model.addAttribute("memberList",employeeService.employeeManagerList(e_id));
 			return "/employee/managerMember";
