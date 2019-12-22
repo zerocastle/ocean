@@ -40,7 +40,11 @@
 					<div class="card-body p-0">
 						<!-- Nested Row within Card Body -->
 						<div class="row">
-							<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+							<!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
+
+
+							<img alt="" src="/resources/img/logPage/log.jpg" width="450" height="450" style="float:left;">
+
 							<div class="col-lg-6">
 								<div class="p-5">
 									<div class="text-center">
@@ -105,7 +109,7 @@
 					window.alert("아이디 또는 비밀번호를 입력 해주세요");
 					return false;
 				}
-				
+
 				$('#login').focus();
 
 				var data = JSON.stringify({

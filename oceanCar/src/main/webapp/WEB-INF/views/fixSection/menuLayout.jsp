@@ -14,7 +14,7 @@
 		<div class="sidebar-brand-icon rotate-n-15">
 			<i class="fas fa-laugh-wink"></i>
 		</div>
-		<div class="sidebar-brand-text mx-3">OCEAN CAR</div>
+		<div class="sidebar-brand-text mx-3">제이와이 렌트카</div>
 	</a>
 
 	<!-- Divider -->

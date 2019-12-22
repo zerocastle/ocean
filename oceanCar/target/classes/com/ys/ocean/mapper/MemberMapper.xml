@@ -136,7 +136,7 @@
 		]]>
 		WHERE E_ID = #{e_id}
 	</update>
-	
+
 	<!-- 출고처리 -->
 	<update id="updateOrder" parameterType="MemberVO">
 		UPDATE MEMBER
@@ -147,12 +147,13 @@
 			SELECT M_NUM FROM MEMBER WHERE M_NUM = #{m_num}
 		</selectKey>
 	</update>
-	
+
 	<!-- 출고일 업데이트 -->
 	<update id="updateOrderDate">
 		UPDATE OORDER
 		SET RELEASED = SYSDATE
-		WHERE M_NUM = #{m_num}
+		WHERE M_NUM =
+		#{m_num}
 	</update>
 
 	<!-- 회원 메모등록 -->
@@ -167,10 +168,12 @@
 		SELECT * FROM
 		(SELECT
 		A.*,ROW_NUMBER() OVER(ORDER BY CDATA DESC) RN
-		FROM MEMBERMEMO A)
-		WHERE 1
-		= 1
-		AND ROWNUM = 1
+		FROM
+		MEMBERMEMO A)
+		WHERE 1 = 1
+		<![CDATA[
+		AND ROWNUM < 4
+		]]>
 		AND M_NUM = #{m_num}
 	</select>
 
@@ -196,19 +199,21 @@
 		]]>
 
 	</select>
-	
+
 	<!-- 켈린더 넣기 -->
 	<insert id="insertCalendar" parameterType="hashmap">
-		INSERT INTO CALENDAR(UK,CA,TITLE)
+		INSERT INTO
+		CALENDAR(UK,CA,TITLE)
 		VALUES(SEQUENCE_CALENDAR.NEXTVAL,#{start},#{title})
 	</insert>
-	
+
 	<!-- 켈린더 리스트 가져오기 -->
- 	<select id="getCalendarList" resultType="CalendarVO">
-		SELECT CA as "start" ,TITLE 
+	<select id="getCalendarList" resultType="CalendarVO">
+		SELECT CA as "start"
+		,TITLE
 		FROM CALENDAR
-	</select> 
-	
-	
+	</select>
+
+
 
 </mapper>
