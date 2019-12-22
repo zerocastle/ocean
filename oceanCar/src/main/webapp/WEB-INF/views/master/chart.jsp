@@ -36,40 +36,18 @@
 	$(function() {
 		var labels = new Array();
 		var data = new Array();
+		
+		var chart = ${chart};
+		
+		console.log(chart);
+		
 		new Morris.Line({
 			//↓---필수 값(무조건 있어야 함)----↓
 			element : 'lineChart', //div id값이 lineChart인 곳에 차트를 그린다.
-			data : [ {
-				"total" : 70000,
-				"mth1" : "18-09-09"
-			}, {
-				"total" : 130000,
-				"mth1" : "18-10-09"
-			}, {
-				"total" : 100000,
-				"mth1" : "18-11-09"
-			}, {
-				"total" : 230025,
-				"mth1" : "18-12-09"
-			}, {
-				"total" : 18937,
-				"mth1" : "18-12-10"
-			}, {
-				"total" : 51039,
-				"mth1" : "18-12-11"
-			}, {
-				"total" : 37950,
-				"mth1" : "18-12-12"
-			}, {
-				"total" : 16255,
-				"mth1" : "18-12-13"
-			},{
-				"total" : 70000000,
-				"mth1" : "20-11-18"
-			} ],
-			xkey : 'mth1',
-			ykeys : [ 'total' ],
-			labels : [ '총 매출' ],
+			data : chart,
+			xkey : 'MTH',
+			ykeys : [ 'SUMP' ],
+			labels : [ 'SUMP' ],
 			//↑---필수 값(무조건 있어야 함)----↑
 			lineColors : [ '#5F735E' ],
 			pointSize : 10

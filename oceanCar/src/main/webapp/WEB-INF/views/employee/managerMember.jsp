@@ -28,7 +28,7 @@
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 
 <!-- Chart code -->
-<script>
+<!-- <script>
 	am4core
 			.ready(function() {
 
@@ -45,8 +45,16 @@
 							"name" : "John",
 							"points" : 35654,
 							"color" : chart.colors.next(),
-							"bullet" : "https://www.amcharts.com/lib/images/faces/A04.png"
+						},{
+							"name" : "james",
+							"points" : 35654,
+							"color" : chart.colors.next(),
+						},{
+							"name" : "alisa",
+							"points" : 35654,
+							"color" : chart.colors.next(),
 						}
+						
 				];
 
 				// Create axes
@@ -94,7 +102,7 @@
 				image.filters.push(new am4core.DropShadowFilter());
 
 			}); // end am4core.ready()
-</script>
+</script> -->
 
 
 
@@ -108,7 +116,9 @@
 		<!-- Begin Page Content -->
 		<div class="container-fluid">
 			<!-- HTML -->
-			<!-- <div class="mb-4" style="width:150px; height:150px; display:inline-block;" id="chartdiv"></div> -->
+			
+			<!-- class="mb-4" style="width:150px; height:150px; display:inline-block;" -->
+			<!-- <div  id="chartdiv"></div> -->
 			<!-- Page Heading -->
 			<h1 class="h3 mb-2 text-gray-800">회원 관리</h1>
 			<p class="mb-4">
@@ -121,7 +131,7 @@
 			<!-- DataTales Example -->
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">회원 리스트</h6>
+					<h6 class="m-0 font-weight-bold text-primary">내 발주 금액 : ${ship.payment} 원</h6>
 					<!-- 오프 set 이동시켜준다 -->
 					<!-- <div class="row" style="margin-top: 10px;">
 						<div class=".col-auto">
@@ -153,7 +163,7 @@
 									<!-- <th>수정일</th> -->
 									<th>진행상태</th>
 									<th>발주유무</th>
-									<th>메모</th>
+									<!-- <th>메모</th> -->
 									<th>담당직원</th>
 								</tr>
 							</thead>
@@ -169,7 +179,7 @@
 												value="${member.update_date}" /></td> --%>
 										<td><c:out value="${member.m_state}" /></td>
 										<td><c:out value="${member.m_order}" /></td>
-										<td><c:out value="${member.memo}" /></td>
+										<%-- <td><c:out value="${member.memo}" /></td> --%>
 										<td><c:out value="${member.e_id}" /></td>
 									</tr>
 								</c:forEach>

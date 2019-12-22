@@ -68,9 +68,9 @@
 									<th>폰번호</th>
 									<th>가입일</th>
 									<!-- <th>수정일</th> -->
-									<th>진행상태</th>
+									<!-- <th>진행상태</th> -->
 									<th>발주유무</th>
-									<th>메모</th>
+									<!-- <th>메모</th> -->
 									<th>담당직원</th>
 								</tr>
 							</thead>
@@ -84,9 +84,9 @@
 												value="${member.reg_date}" /></td>
 										<%-- <td><fmt:formatDate pattern="yyyy-MM-dd"
 												value="${member.update_date}" /></td> --%>
-										<td><c:out value="${member.m_state}" /></td>
+										<%-- <td><c:out value="${member.m_state}" /></td> --%>
 										<td><c:out value="${member.m_order}" /></td>
-										<td><c:out value="${member.memo}" /></td>
+										<%-- <td><c:out value="${member.memo}" /></td> --%>
 										<td><c:out value="${member.e_id}" /></td>
 									</tr>
 								</c:forEach>
@@ -118,8 +118,9 @@
 			var table = $("#dataTable").DataTable({
 				"fnRowCallback" : function(row, data, dataIndex) {
 					console.log(row);
-					if (data[8] == '') {
-						$(row).css("color", "#9F81F7");
+					
+					if (data[5] == '') {
+						$(row).css("color", "#E11919");
 					}
 				},
 				"bDestroy" : true

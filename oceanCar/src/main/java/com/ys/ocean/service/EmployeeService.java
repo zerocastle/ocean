@@ -1,6 +1,7 @@
 package com.ys.ocean.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -20,18 +21,23 @@ public class EmployeeService {
 	public EmployeeVO employeeService(EmployeeVO vo) {
 		return mapper.employeeLoginMapper(vo);
 	}
-	
-	public List<MemberVO> employeeManagerList(@Param("e_id") String e_id){
-		
+
+	public List<MemberVO> employeeManagerList(@Param("e_id") String e_id) {
+
 		return mapper.employeeManagerList(e_id);
 	}
 
-	// 직원 목록
+	public EmployeeVO ship(@Param("e_id") String e_id) {
+
+		return mapper.ship(e_id);
+	}
+
+	// 吏��� 紐⑸�
 	public List<EmployeeVO> getEmployeeListService() {
 		return mapper.getEmployeeListService();
 	}
 
-	// 클릭-->팝업창 회원 정보 불러오기
+	// �대┃-->����李� ���� ��蹂� 遺��ъ�ㅺ린
 	public List<EmployeeVO> employeeFind(@Param("e_id") String e_id) {
 		// TODO Auto-generated method stub
 		return mapper.employeeFind(e_id);
@@ -39,7 +45,7 @@ public class EmployeeService {
 
 	public int dataUpdate(EmployeeVO vo) {
 		return mapper.dataUpdate(vo);
-		
+
 	}
 
 	public int dataDelete(EmployeeVO vo) {
@@ -52,4 +58,5 @@ public class EmployeeService {
 		return mapper.insertEmployee(employeeVO);
 	}
 
+	
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ys.ocean.service.MemberService;
+import com.ys.ocean.vo.MemberVO;
 import com.ys.ocean.vo.Oorder;
 
 import lombok.AllArgsConstructor;
@@ -39,11 +40,23 @@ public class MemberController {
 
 	@PostMapping(value = "/insertBal")
 	@ResponseBody
-	public String logoutEmployee(Model model, HttpServletRequest request, @RequestBody Oorder param) {
+	public String insertBal(Model model, HttpServletRequest request, @RequestBody Oorder param) {
 		param.setO_code(UUID.randomUUID().toString());
 		System.out.println(param);
 		service.insertBal(param);
 		
+		JSONObject object = new JSONObject();
+		object.put("signal","1");
+		
+		return object.toString();
+
+	}
+	
+	@PostMapping(value = "/updateChul")
+	@ResponseBody
+	public String updateOrder(Model model, HttpServletRequest request, @RequestBody Map<String,String> param) {
+		
+		int n = service.updateOrder(param);
 		JSONObject object = new JSONObject();
 		object.put("signal","1");
 		

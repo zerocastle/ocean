@@ -46,6 +46,7 @@ a:hover {
 			$('#hu').css("display", "none");
 		} else if (data[0].m_order == '출고') {
 			$('#hu').css("display", "none");
+			$('#ha').css("display", "none");
 		} else {
 			$('#CAR_CDATE').removeAttr("readonly");
 			$('#CAR_CDATE').attr("type", "date");
@@ -93,6 +94,31 @@ a:hover {
 		var day = date.getDate(); //d
 		day = day >= 10 ? day : '0' + day; //day 두자리로 저장
 		return year + '-' + month + '-' + day;
+	}
+	
+	//출고처리
+	function chul(){
+		var data = JSON.stringify({
+			"m_num" : $('input[name=MEM_ID]').val()
+		});
+		
+		$.ajax({
+			type : "post",
+			url : "/member/updateChul",
+			data : data,
+			dataType : "json",
+			contentType : "application/json;charset=UTF-8",
+			success : function(data) {
+				console.log(data);
+				if (data.signal >= 1) {
+					window.opener.location.reload();
+					window.location.reload();
+					alert("등록완료");
+				} else {
+					alert("오류 발생");
+				}
+			}
+		})
 	}
 
 	//발주처리
@@ -209,17 +235,16 @@ a:hover {
 						<tr align='center' height='30'
 							style='COLOR: #FFFFFF; font-weight: bold;' bgcolor='#6E6E6E'>
 
-							<td width='33%' style='background-color: #000; cursor: pointer;'
-								onclick="JAVASCRIP:location.href='/MEMBER/member_info.php?MEM_CODE=2804&MEM_ID=01041892729'">
+							<td width='33%' style='background-color: #000; cursor: pointer;'>
 								회원 정보</td>
-							<td width='33%'
+							<!-- <td width='33%'
 								style='background-color: #6E6E6E; cursor: pointer; border-left: 1px solid #C9C9C9;'
 								onclick="JAVASCRIP:location.href='/MEMBER/member_image.php?MEM_CODE=2804&MEM_ID=01041892729'">
 								이미지 정보</td>
 							<td width='33%'
 								style='background-color: #6E6E6E; cursor: pointer; border-left: 1px solid #C9C9C9;'
 								onclick="JAVASCRIP:location.href='/MEMBER/member_qna.php?MEM_CODE=2804&MEM_ID=01041892729'">
-								회원 문의</td>
+								회원 문의</td> -->
 
 						</tr>
 					</table>
@@ -442,7 +467,7 @@ a:hover {
 								style='font-weight: bold; color: #333575;'>
 								<!-- 발주에대한 변화 --> <a href="JAVASCRIPT:bal();" id="ha"><input
 									type="button" value='발 주' class="btn btn-red"></a> <a
-								href="javascript:MemModify('chulgo');" id="hu"><input
+								href="JAVASCRIPT:chul();" id="hu"><input
 									type="button" value='출 고' class="btn btn-red"></a> &nbsp;
 								&nbsp; &nbsp; <!-- <a
 								href="JAVASCRIPT:MemModify('member');"><input type="button"
