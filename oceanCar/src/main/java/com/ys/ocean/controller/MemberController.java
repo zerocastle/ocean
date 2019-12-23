@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ys.ocean.service.MemberService;
-import com.ys.ocean.vo.MemberVO;
+import com.ys.ocean.vo.MemberFindVO;
 import com.ys.ocean.vo.Oorder;
 
 import lombok.AllArgsConstructor;
@@ -51,6 +51,21 @@ public class MemberController {
 		return object.toString();
 
 	}
+	
+	@PostMapping(value = "/deleteBal")
+	@ResponseBody
+	public String deleteBal(Model model, HttpServletRequest request, @RequestBody MemberFindVO param) {
+		System.out.println(param);
+		
+		service.updateBalCancel(param);
+		
+		JSONObject object = new JSONObject();
+		object.put("signal","1");
+		
+		return object.toString();
+
+	}
+	
 	
 	@PostMapping(value = "/updateChul")
 	@ResponseBody

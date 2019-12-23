@@ -40,17 +40,21 @@ a:hover {
 		if(data[0].e_id == ''){
 			$('#hu').css("display", "none");
 			$('#ha').css("display", "none");
+			$('#zzz').css("display","none");
 		}
 
 		if (data[0].m_order == '') {
 			$('#hu').css("display", "none");
+			$('#zzz').css("display","none");
 		} else if (data[0].m_order == '출고') {
 			$('#hu').css("display", "none");
 			$('#ha').css("display", "none");
+			$('#zzz').css("display","block");
 		} else {
 			$('#CAR_CDATE').removeAttr("readonly");
 			$('#CAR_CDATE').attr("type", "date");
 			$('#ha').css("display", "none");
+			$('#zzz').css("display","none");
 		}
 
 		$('input[name=MEM_ID]').val(data[0].m_num);
@@ -156,6 +160,39 @@ a:hover {
 				}
 			}
 		})
+	}
+	
+	//발주취소
+	function deleteVal(){
+		var con = confirm("데이터가 초기화 됩니다 그래도 취소 하겠습니까?");
+		var oo = ${key};
+		console.log(oo[0]);
+		oo[0].order_date = "";
+		oo[0].reg_date = "";
+		oo[0].released = "";
+		
+		console.log(oo[0]);
+		if(con){
+		$.ajax({
+			type : "post",
+			url : "/member/deleteBal",
+			data : JSON.stringify(oo[0]),
+			dataType : "json",
+			contentType : "application/json;charset=UTF-8",
+			success : function(data) {
+				console.log(data);
+				if (data.signal >= 1) {
+					window.opener.location.reload();
+					window.location.reload();
+					alert("등록완료");
+				} else {
+					alert("오류 발생");
+				}
+			}
+		})
+		}else{
+			alert("취소했습니다");
+		}
 	}
 
 	//메모 등록하기
@@ -467,11 +504,10 @@ a:hover {
 								style='font-weight: bold; color: #333575;'>
 								<!-- 발주에대한 변화 --> <a href="JAVASCRIPT:bal();" id="ha"><input
 									type="button" value='발 주' class="btn btn-red"></a> <a
-								href="JAVASCRIPT:chul();" id="hu"><input
-									type="button" value='출 고' class="btn btn-red"></a> &nbsp;
-								&nbsp; &nbsp; <!-- <a
-								href="JAVASCRIPT:MemModify('member');"><input type="button"
-									value='수 정' class="btn btn-primary"></a> --> <a
+								href="JAVASCRIPT:chul();" id="hu"><input type="button"
+									value='출 고' class="btn btn-red"></a> &nbsp; &nbsp; &nbsp; <a
+								href="JAVASCRIPT:deleteVal();" id="zzz"><input type="button"
+									value='발주취소' class="btn btn-red"></a> <a
 								href="javascript:self.close();"><input type="button"
 									value='닫 기' class="btn btn-primary"></a>
 							</td>

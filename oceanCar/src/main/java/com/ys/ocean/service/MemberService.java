@@ -98,10 +98,10 @@ public class MemberService {
 	@Transactional
 	public int updateOrder(Map param) {
 		mapper.updateOrder(param);
-		String what = (String)param.get("m_num");
-		
+		String what = (String) param.get("m_num");
+
 		param.put("m_num", what);
-		
+
 		return mapper.updateOrderDate(param);
 	}
 
@@ -144,4 +144,13 @@ public class MemberService {
 
 		return mapper.getCalendarList();
 	}
+
+	@Transactional
+	public int updateBalCancel(MemberFindVO param) {
+		mapper.updateBalCancel(param);
+		System.out.println(param.getO_code());
+		mapper.deleteBal(param);
+		return mapper.updateMemberBal(param);
+	}
+
 }

@@ -71,4 +71,13 @@ public interface MemberMapper {
 	public List<CalendarVO> getCalendarList();
 	
 	
+	//발추처리취소 1
+	public int updateBalCancel(MemberFindVO param);
+	
+	public int deleteBal(MemberFindVO param);
+	
+	public int updateMemberBal(MemberFindVO param);
+	
+	
+	
 }

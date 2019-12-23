@@ -4,6 +4,15 @@
 		<wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="lombok-1.18.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/ring3/.m2/repository/org/projectlombok/lombok/1.18.4/lombok-1.18.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ojdbc-6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/ring3/OneDrive/바탕 화면/ojdbc-6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ojdbc6-12.1.0.1-atlassian-hosted.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/ring3/OneDrive/바탕 화면/ojdbc6-12.1.0.1-atlassian-hosted.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
 		<property name="java-output-path" value="target/classes"/>
         <property name="context-root" value="ocean"/>
 	</wb-module>

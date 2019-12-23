@@ -190,14 +190,10 @@
 	<!-- 직원들 순위 측정 -->
 	<select id="selectRank" resultType="EmployeeVO">
 		SELECT *
-		FROM(
-		SELECT ROWNUM RN , a.* FROM EMPLOYEE a ORDER BY PAYMENT
-		DESC
-		)
+		FROM(SELECT * FROM EMPLOYEE ORDER BY PAYMENT DESC)
 		<![CDATA[
-		WHERE RN < 5
+		WHERE ROWNUM < 5
 		]]>
-
 	</select>
 
 	<!-- 켈린더 넣기 -->
@@ -213,7 +209,27 @@
 		,TITLE
 		FROM CALENDAR
 	</select>
-
-
+	
+	<!-- 발주취소 1 -->
+	<update id="updateBalCancel" parameterType="MemberFindVO">
+		UPDATE EMPLOYEE
+		<![CDATA[
+		SET PAYMENT = PAYMENT - #{price,jdbcType=INTEGER}
+		]]>
+		WHERE E_ID = #{e_id}
+	</update>
+	
+	<!-- 발주취소 2 -->
+	<delete id="deleteBal" parameterType="MemberFindVO">
+		DELETE FROM OORDER
+		WHERE O_CODE = #{o_code}
+	</delete>
+	
+	<!-- 발추취소3 -->
+	<update id="updateMemberBal" parameterType="MemberFindVO">
+		UPDATE MEMBER
+		SET M_ORDER = NULL
+		WHERE M_NUM = #{m_num}
+	</update>
 
 </mapper>
