@@ -39,7 +39,7 @@
 	<update id="dataUpdate" parameterType="EmployeeVO">
 		UPDATE EMPLOYEE
 		SET phone =
-		#{phone}, pw = #{pw}, name = #{name}
+		#{phone}, pw = #{pw}, name = #{name} , e_type = #{e_type}
 		WHERE e_id = #{e_id}
 	</update>
 

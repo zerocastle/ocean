@@ -45,13 +45,16 @@ a:hover {
 		$('input[name=NAME]').val(data[0].name);
 		$('input[name=PHONE]').val(data[0].phone);
 		$('input[name=PASSWORD]').val(data[0].pw);
+		$('input[name=e_type]').val(data[0].e_type);
+		
 		
 		$(".btn-update").click(function(){
 			var data = JSON.stringify({
 					e_id : $("#e_id").val(),
 					name : $("#name").val(),
 					phone : $("#phone").val(),
-					pw : $("#password").val()
+					pw : $("#password").val(),
+					e_type : $("#e_type").val()
 			});
 			
 			$.ajax({
@@ -175,6 +178,19 @@ a:hover {
 										<td width='29%' align='left' style='padding-left: 7px;'>
 											<input type='text' id="e_id" name='E_ID' readonly="readonly" value='' style='width: 120px; height: 20px;'>
 										</td>
+									</tr>
+									
+									
+									<tr align='center' height='35' bgcolor='#FFFFFF'>
+										<td bgcolor='#E9E7E7'>직원타입(0 또는 1)</td>
+										<td align='left' style='padding-left: 7px;'>
+											<input type='text' id="e_type" name="e_type" value='' style='width: 120px; height: 20px;'>
+										</td>
+										
+										<!-- <td width='15%' bgcolor='#E9E7E7'>아이디</td>
+										<td width='29%' align='left' style='padding-left: 7px;'>
+											<input type='text' id="e_id" name='E_ID' readonly="readonly" value='' style='width: 120px; height: 20px;'>
+										</td> -->
 									</tr>
 
 								</table>

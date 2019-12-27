@@ -16,7 +16,7 @@
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="/resources/css/sb-admin-2.min.css" rel="stylesheet">
+<!-- <link href="/resources/css/sb-admin-2.min.css" rel="stylesheet"> -->
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script
@@ -24,8 +24,10 @@
 <script
 	src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 
-<link rel="stylesheet"
+ <link rel="stylesheet"
 	href="//cdn.datatables.net/select/1.2.7/css/select.dataTables.css">
+
+
 </head>
 <body>
 
@@ -119,6 +121,7 @@
 		var example_tbl = null
 		$(function() {
 			example_tbl = $('#example').DataTable({
+				paging: false,
 				columnDefs : [ {
 					orderable : false,
 					className : 'select-checkbox',
